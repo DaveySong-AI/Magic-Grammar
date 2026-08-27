@@ -12727,6 +12727,14 @@ function updateAdminPageSelect() {
   if (!isAdmin()) return;
   const ps = document.getElementById('adminPageSelect');
   ps.innerHTML = '';
+  // 页面刚加载时 slides 可能未定义（还没进入课程），安全检查
+  if (typeof slides === 'undefined' || !slides || slides.length === 0) {
+    const o = document.createElement('option');
+    o.textContent = '请先选择课程';
+    o.disabled = true;
+    ps.appendChild(o);
+    return;
+  }
   for (let i = 0; i < slides.length; i++) {
     const o = document.createElement('option');
     o.value = i;
@@ -12742,7 +12750,11 @@ function updateAdminPageSelect() {
 
 function updateAdminStatus() {
   if (!isAdmin()) return;
-  document.getElementById('adminStatus').textContent = '当前：第' + currentCourse + '课 P' + (currentSlide + 1) + '/' + totalSlides;
+  if (currentCourse === 0 || typeof totalSlides === 'undefined') {
+    document.getElementById('adminStatus').textContent = '当前：未选择课程';
+  } else {
+    document.getElementById('adminStatus').textContent = '当前：第' + currentCourse + '课 P' + (currentSlide + 1) + '/' + totalSlides;
+  }
 }
 
 function adminJumpCourse() {
