@@ -1445,16 +1445,24 @@
   /* 管理员入口 */
   .admin-entry {
     position: fixed;
-    bottom: 8px;
-    right: 8px;
-    font-size: 10px;
-    color: rgba(255,255,255,0.15);
+    bottom: 16px;
+    right: 16px;
+    font-size: 24px;
+    color: rgba(255,215,0,0.6);
     cursor: pointer;
     z-index: 100;
     user-select: none;
-    transition: color 0.3s;
+    transition: all 0.3s;
+    background: rgba(0,0,0,0.3);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(255,215,0,0.3);
   }
-  .admin-entry:hover { color: rgba(255,255,255,0.4); }
+  .admin-entry:hover { color: rgba(255,215,0,1); background: rgba(0,0,0,0.6); transform: scale(1.1); }
 
   /* 管理员登录模态框 */
   .admin-login-modal {
@@ -11976,7 +11984,7 @@ function openCourse(num){
   }
   showCourse(num);
 }
-renderMap();
+try { renderMap(); } catch(e) { console.error('renderMap出错:', e); }
 
 
 // 课程切换
