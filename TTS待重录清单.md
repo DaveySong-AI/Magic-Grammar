@@ -90,3 +90,11 @@
 |---|---|---|
 | 第19课 P5 | ⏳ 待重录 | 删错误式 "Young, he lived in Beijing"（并删"when可以省"的断言），改列稳妥式 When young…／Being young…（仅解说词，可见正文未含此例） |
 | 第19课 P7 | ⏳ 待重录 | still 让步式由光杆 "Tired, he still went on working" 改为 "Being tired, he still went on working"（解说词 + 可见正文同步） |
+
+## Issue #14（第8课·副词）— 2026-08-28 修改
+
+| 课-页 | 类型 | 说明 |
+|---|---|---|
+| 第8课 P10 | ⏳ 待重录 | 上位类"强调语气的副词"删去误用的英文括注 Intensifiers（改注 Adverbs of Emphasis），Intensifiers 归位到其下"加强语气的副词"小类；解说词与可见正文、②小类标题同步 |
+
+> 第8课 P2 学习目标一行 <li> 术语同步（仅可见正文，无解说词）；教案关键词表与大纲 P10 行同步。
