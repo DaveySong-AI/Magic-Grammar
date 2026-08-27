@@ -12,6 +12,10 @@
   - 例七（P12）：脚本缺此例，按语雀原书 c21 补全五句，恢复 as much as I should 比较级、about forgetting、what to say 三个关键步骤
   - 例八（P13）：删除自造"学生考试"七句，换回原书 A. Fries 七句合一（对等省略 he is、名词补语作同位语、team's loss、by+动名词）
   - 5 页幻灯片可见正文与 `data-note` 同步重写；《TTS待重录清单.md》登记第21课 P7–P13 共 7 页待重录
+- 🐛 Issue #24：第18课「名词从句简化」3 处严重错误修复
+  - ①-1 教案大纲 P13 判断流程图公式写错 → 改为"助动词→to V；进行式 be+Ving→留 Ving；单纯 be/被动态→being（being Ven）；无 be 无助动词→加 -ing→Ving"（课件 P13 本就正确，仅教案）
+  - ①-2 解说词 P7 方法三讲乱：删除凭空造的病句 "I am worried about that my son lies to me" 与 "加 of/用 for"，改按原书补出 about the fact 同位语，给 my son's lying／my son lying 两式并比较（可见正文同步）
+  - ①-3 解说词 P8 例句破坏简化条件：把 "That I am called a liar／That I am a teacher" 换回原书空泛主语 "That anyone…／That one…"（可见正文同步）；《TTS待重录清单.md》登记第18课 P7/P8 待重录
 
 ## [V1.2.2] - 2026-08-28
 
