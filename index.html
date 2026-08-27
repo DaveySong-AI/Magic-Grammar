@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="referrer" content="no-referrer">
 <title>英语魔法师之语法俱乐部</title>
 <style>
 
@@ -11895,6 +11896,7 @@ let ttsRate = 1.0;
 function ttsInit() {
   audioPlayer = new Audio();
   audioPlayer.preload = 'auto';
+  audioPlayer.referrerPolicy = 'no-referrer';
   
   audioPlayer.addEventListener('ended', () => {
     ttsIsPlaying = false;
