@@ -10,6 +10,26 @@
 - ➕ Issue #24（第18课）：补原书 c18s01 告诫"不定词 to V 不能放在介系词后面（如 used to 后要用 Ving）"；教案 §六、大纲 P9、课件 P9（新增⚠️卡 + 记住行 + 解说词延长）同步
 - ➕ Issue #26（第21课）：教案脚本补写"例七：从五个单句到 what to say"整节（原书 c21 五步：as…as 比较级合并→about the possibility→介系词后用 forgetting→what to say）+ 例六"括弧助动词 (will)/(can)"记号说明；课件 P12 例七已在 V1.2.3 换回原句，本次补齐文字讲解
 
+### 内容精修（P3·解说词差异，7 个并行 agent 研究 + 串行整合，共 68 处补丁）
+- ✏️ #8 第2课 P9：补 a member / campaign partner 宾补例（"一群当中的一个"）
+- ✏️ #9 第3课：P6 补 doorbell"最小时点括弧"例；P13 综合表加"一般动词无 be 时直接变位"注
+- ✏️ #11 第5课：P10 being invited 改"被动态省主语不歧义、借 be 变 being"；P12 删绝对化"只能用"+去 5-2 检验法
+- ✏️ #12 第6课：P11 who live→who are living、补 being auctioned 例；P12 Having finished 改"had→having 词类变化"、补 pigeon after flying 例（含可见正文）
+- ✏️ #13 第7课：P12 换回 Yangmingshan 最高级补语例；P13 换回 chimp I.Q. 倒装"距离—清楚性"（含可见正文）
+- ✏️ #14 第8课：P13 补回分离副词推导（Scientifically 还原、逗号来源、honestly 对比）；P14 补 -ly 双音节比较级 more sweetly；P10/P12 加强语气"去掉只是语气变弱、意思不变"
+- ✏️ #15 第9课 P3：补四语气"真/不确定/假/想成真"档位一览
+- ✏️ #17 第11课：P8 as well as you 改"比较级从句简化"；P14 补三道课堂快答
+- ✏️ #18 第12课：P7/P8/P13/P14 修正"that 只看位置"为"看省略后是否清楚"，补 The important thing is…/I am afraid… 可省（含可见正文）
+- ✏️ #19 第13课：P7 恢复 If he calls 三重时态 + suppose 假设语气；P8 so that 结果/目的对举
+- ✏️ #20 第14课：P10 basket/plague 位置服从清楚（含两张可见卡）；P11 关系副词省略改"看词类、择一省略"+ how/I need 病句对比例
+- ✏️ #21 第15课：P5/P11/P14 but also he is→but he is also（三处，含可见正文）；P11 例9 改原书订单 that 对称；P6/P8 例三 fetus"of 可省不可省"（含可见正文）
+- ✏️ #22 第16课 P9：删错误示范 The news to leave is true、收回为"主语须空洞/重复"驳斥（含可见正文）
+- ✏️ #23 第17课：P8 your brother to do 两步拆解；P12 同位语词类冲突改原书表述
+- ✏️ #24 第18课：P6 his 限定词表述；P8 a teacher 语义/词类错框改回"意思稍有出入"
+- ✏️ #25 第19课：P4 分词构句段收回（去 P4/P5 重叠）；P9/P10 having finished 完成式讲法、after 省略→Having written 推理；P11 Dangling Modifier 两改法对齐原书
+- ✏️ #27 第22课：P7 假设倒装限定 Had/Were/Should；P13/P14 Long live 由"虚拟语气倒装"改回"某些祈使句句型倒装"（含可见正文）
+- #10 第4课、#16 第10课、#26 第21课 的 ③ 项经核对已在 P1/P2 涵盖，自动跳过
+
 ## [V1.2.3] - 2026-08-28
 
 ### Bug 修复
