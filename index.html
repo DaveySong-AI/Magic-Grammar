@@ -1696,7 +1696,7 @@
   <button class="tts-btn" id="ttsPlayBtn" onclick="ttsPlay()" title="播放本页讲解">🔊</button>
   <button class="tts-btn" id="ttsPauseBtn" onclick="ttsPause()" title="暂停/继续" disabled>⏸</button>
   <button class="tts-btn" id="ttsStopBtn" onclick="ttsStop()" title="停止" disabled>⏹</button>
-  <div class="tts-auto-toggle active" id="ttsAutoToggle" onclick="ttsToggleAuto()">
+  <div class="tts-auto-toggle" id="ttsAutoToggle" onclick="ttsToggleAuto()">
     <span id="ttsAutoIcon">✅</span>
     <span id="ttsAutoText">自动播</span>
   </div>
@@ -12075,7 +12075,7 @@ function goHome() {
 let audioPlayer = null;
 let ttsIsPlaying = false;
 let ttsIsPaused = false;
-let ttsAutoPlay = true;
+let ttsAutoPlay = false; // 默认关闭自动播放，与README一致，避免浏览器autoplay限制拦截
 let ttsRate = 1.0;
 
 // 初始化音频播放器
@@ -12236,6 +12236,8 @@ let notesVisible = false;
 
 
 function updateSlide() {
+  // 空数组保护：页面加载时slides可能为空，避免slides[currentSlide].dataset.note抛TypeError
+  if (!slides || slides.length === 0) return;
   slides.forEach((slide, index) => {
     slide.classList.toggle('active', index === currentSlide);
   });
@@ -12304,6 +12306,7 @@ function prevSlide() {
 }
 
 function goToSlide(index) {
+  ttsStop(); // 页码圆点翻页时停止当前页语音，避免旧页语音继续播放
   currentSlide = index;
   updateSlide();
 }
