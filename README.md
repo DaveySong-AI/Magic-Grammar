@@ -67,6 +67,8 @@ Magic-Grammar/
 ├── REQUIREMENTS.md         # 需求文档（V1.1功能规格说明）
 ├── CHANGELOG.md            # 版本更新日志
 ├── SKILL.md                # 课件制作Skill（含Bug验证环节）
+├── Magic-Grammar-QRCode.png       # 网站二维码（标准版）
+├── Magic-Grammar-QRCode-Share.png # 网站二维码（分享版，1080×1440）
 └── courses/                # 22课教案文档
     ├── 第1节课-课程大纲与讲解脚本.md
     ├── 第1节课-随堂测试.md
@@ -80,7 +82,16 @@ Magic-Grammar/
 ## 🚀 使用方法
 
 ### 在线访问
-启用 GitHub Pages 后，访问：`https://你的用户名.github.io/Magic-Grammar/`
+🌐 **https://daveysong-ai.github.io/Magic-Grammar/**
+
+📱 手机扫码访问：
+
+![Magic Grammar 二维码](Magic-Grammar-QRCode.png)
+
+### 分享传播
+适合发朋友圈/小红书的分享版二维码（1080×1440）：
+
+![Magic Grammar 分享版二维码](Magic-Grammar-QRCode-Share.png)
 
 ### 本地使用
 1. 下载 `index.html`
@@ -98,7 +109,7 @@ Magic-Grammar/
 
 ## 📝 版本
 
-- **当前版本**：V1.1
+- **当前版本**：V1.2
 - 详见 [CHANGELOG.md](./CHANGELOG.md)
 
 ## 📄 许可
