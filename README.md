@@ -107,6 +107,30 @@ Magic-Grammar/
 - localStorage 本地数据存储
 - 响应式设计（PC/移动端自适应）
 
+## 🤝 开发协作 / Development Workflow
+
+本项目采用**多工具协作研发模式**，统一在 GitHub 上进行管理：
+
+| 角色 Role | 工具 Tool | 职责 Responsibility |
+|-----------|-----------|---------------------|
+| 项目管理 / 产品设计 (PM + PD) | **WorkBuddy**（本项目 AI Agent） | 项目管理、需求定制与拆分、issue 跟进 |
+| 主力开发 (Dev) | **Doubao Work** | 课件与功能实现 |
+| 代码审查 (Code Review) | **千问办公（Qwen）** | 代码质量把关 |
+
+> 需求变更统一通过 GitHub Issue 提交，由 WorkBuddy 作为 PM/PD 跟进落地。
+
+**English**
+
+This project uses a **multi-tool collaboration model**, managed entirely on GitHub:
+
+| Role | Tool | Responsibility |
+|------|------|----------------|
+| Project Management / Product Design (PM + PD) | **WorkBuddy** (this project's AI Agent) | Project management, requirement definition, issue follow-up |
+| Primary Development (Dev) | **Doubao Work** | Courseware and feature implementation |
+| Code Review | **Qwen Office (千问办公)** | Code quality gate |
+
+> Requirement changes are submitted via GitHub Issues and tracked by WorkBuddy as PM/PD.
+
 ## 📝 版本
 
 - **当前版本**：V1.2
