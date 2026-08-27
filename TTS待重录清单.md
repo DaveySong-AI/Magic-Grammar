@@ -25,6 +25,22 @@
 
 > P16 庆祝页原本已正确（"下一课主语动词一致性"），未改动、无需重录。PPT 可见正文与上述页面同步修改，但不影响音频。
 
+## Issue #26（第21课·简化从句练习）— 2026-08-28 修改
+
+解说词 P7–P13（例二~例八）原以"原句"名义使用了自造/失真例句，已按语雀原书 c21 全部换回，页面可见正文与 `data-note` 同步重写，需整段重录：
+
+| 课-页 | 类型 | 说明 |
+|---|---|---|
+| 第21课 P7（例二） | ⏳ 待重录 | 换回原书 The summer tourists… / resort town… tranquillity，now that 与 with 结构 |
+| 第21课 P8（例三） | ⏳ 待重录 | 换回 Confucius 竹简/东周/东汉三句，paper not being available 表原因 |
+| 第21课 P9（例四） | ⏳ 待重录 | 换回 Gutenberg 活版印刷三句，an event 同位语 + marking 概括整件事 |
+| 第21课 P10（例五） | ⏳ 待重录 | 换回 Ben Kook 三句，强调 at times 已省、when 不宜省 |
+| 第21课 P11（例六） | ⏳ 待重录 | 换回原书三句（I'd like something…），补 to V 推导与 before+动名词 |
+| 第21课 P12（例七） | ⏳ 待重录 | 按原书五句重写，恢复 as much as I should 比较级 + about forgetting + what to say |
+| 第21课 P13（例八） | ⏳ 待重录 | 换回 A. Fries 七句合一，含对等省略/同位语/Seeing…/by tendering his resignation |
+
+> 第21课 P12 例七原句取自语雀原书 c21（仓库脚本原本缺该段讲解，属 #26 的"重要缺失"，留待 P2 阶段在脚本中补写）。
+
 ## 已知遗留问题（非本次改动引入）
 
 - 第13课 slide 共 17 页，但 allAudioUrls[13] 仅 16 条，页-音频存在错位，建议单独立项修复（重录第13课时一并核对）。

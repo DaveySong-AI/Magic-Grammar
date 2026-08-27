@@ -1,5 +1,18 @@
 # 更新日志
 
+## [V1.2.3] - 2026-08-28
+
+### Bug 修复
+- 🐛 Issue #26：第21课「简化从句练习」5 处严重错误修复（例句被自造/失真替换）
+  - 例二（P7）：换回原书 The summer tourists are all gone / The resort town has resumed its air of tranquillity，改用 now that 引导、with + 宾语 + 补语结构
+  - 例三（P8）：换回 Confucius 竹简/东周/东汉三句，paper not being available 表原因（删除"when paper was not available"错误等价改写）
+  - 例四（P9）：删除自造柏林墙例句，整体换回 Gutenberg 活版印刷三句 + an event 同位语 → marking 概括整件事
+  - 例五（P10）：换回 Ben Kook 三句，恢复"at times 已省 → when 不宜省"的交叉教学点
+  - 例六（P11）：换回原书三句（I'd like something. / You will meet… / Then you can leave.），补回助动词→to V 推导与 before + 动名词
+  - 例七（P12）：脚本缺此例，按语雀原书 c21 补全五句，恢复 as much as I should 比较级、about forgetting、what to say 三个关键步骤
+  - 例八（P13）：删除自造"学生考试"七句，换回原书 A. Fries 七句合一（对等省略 he is、名词补语作同位语、team's loss、by+动名词）
+  - 5 页幻灯片可见正文与 `data-note` 同步重写；《TTS待重录清单.md》登记第21课 P7–P13 共 7 页待重录
+
 ## [V1.2.2] - 2026-08-28
 
 ### Bug 修复
