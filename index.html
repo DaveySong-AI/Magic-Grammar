@@ -1295,7 +1295,7 @@
   /* 首页统计栏 */
   .stats-bar { flex-wrap: wrap; gap: 8px; padding: 10px; }
   .stat-badge { font-size: 12px; padding: 6px 12px; }
-  .reset-btn, .wrongbook-btn { font-size: 12px; padding: 6px 12px; }
+  .reset-btn, .wrongbook-btn, .ref-source-btn { font-size: 12px; padding: 6px 12px; }
   
   /* 首页标题 */
   .hero h1 { font-size: clamp(24px, 7vw, 48px); }
@@ -1345,6 +1345,23 @@
     transition: all 0.3s;
   }
   .poster-btn:hover { transform: scale(1.05); box-shadow: 0 0 15px rgba(78,205,196,0.5); }
+
+  /* 原文参考外链按钮（issue #6） */
+  .ref-source-btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 8px 18px;
+    background: linear-gradient(135deg, #a18cd1, #6a5cff);
+    border: 2px solid #a18cd1;
+    border-radius: 20px;
+    color: #fff;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    font-family: inherit;
+    text-decoration: none;
+    transition: all 0.3s;
+  }
+  .ref-source-btn:hover { transform: scale(1.05); box-shadow: 0 0 15px rgba(161,140,209,0.6); }
 
   /* 海报模态框 */
   .poster-modal {
@@ -1604,6 +1621,7 @@
 </div>
 
 <div class="stats-bar">
+  <a class="ref-source-btn" href="https://llwslc.github.io/grammar-club/" target="_blank" rel="noopener noreferrer" title="魔法英语语法原文（第三方站点），版权归原作者所有，本项目仅作学习参考">📖 原文参考</a>
   <div class="stat-badge">⭐ 通关 <span id="completedCount">0</span> / 22</div>
   <div class="stat-badge">🏆 进度 <span id="progressPercent">0</span>%</div>
   <button class="wrongbook-btn" onclick="openWrongBook()">📕 错题本 <span id="wrongCount">0</span></button>
