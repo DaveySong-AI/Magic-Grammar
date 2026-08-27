@@ -8,6 +8,7 @@
 - ➕ Issue #20（第14课）：补原书 c14s03 反例 "I like books, whatever the subject, that have illustrations."（成对逗号括的是插入语、从句仍具指示功能仍可用 that，破除"逗号后一律无 that"）与 c14s05 plague 组 "A plague broke out which lasted 20 years."（紧跟先行词反颠三倒四、从句后置更合逻辑），教案 §五、§七 同步
 - ➕ Issue #22（第16课）：补原书 c16s01–s02 命名由来——通行术语"非限定从句（Nonfinite Clauses）/非限定动词"及旋元佑改提"简化从句（Reduced Clauses）"的两因、回溯修辞"清楚+简洁"；教案 §二、大纲 P3、课件 P3（新增说明卡 + 解说词延长）同步
 - ➕ Issue #24（第18课）：补原书 c18s01 告诫"不定词 to V 不能放在介系词后面（如 used to 后要用 Ving）"；教案 §六、大纲 P9、课件 P9（新增⚠️卡 + 记住行 + 解说词延长）同步
+- ➕ Issue #26（第21课）：教案脚本补写"例七：从五个单句到 what to say"整节（原书 c21 五步：as…as 比较级合并→about the possibility→介系词后用 forgetting→what to say）+ 例六"括弧助动词 (will)/(can)"记号说明；课件 P12 例七已在 V1.2.3 换回原句，本次补齐文字讲解
 
 ## [V1.2.3] - 2026-08-28
 
