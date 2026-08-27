@@ -11866,6 +11866,7 @@ function showCourse(num) {
   // 重置互动测试状态（Bug修复：切课时不重置导致第2课起测试失效）
   quizCorrectCount = 0;
   quizAnswered.clear();
+  quizAnswers = {};
   // 重置测试页UI：选项可点击、清除对错状态、隐藏反馈、隐藏庆祝按钮
   const quizSlide = slides[totalSlides - 2]; // 测试页是倒数第2页
   if (quizSlide) {
@@ -12087,6 +12088,14 @@ function updateSlide() {
   document.getElementById('prevBtn').disabled = currentSlide === 0;
   document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
   
+  // 测试页（倒数第2页）隐藏右侧翻页按钮，只能通过庆祝按钮进入庆祝页
+  const nextBtn = document.getElementById('nextBtn');
+  if (currentSlide === totalSlides - 2) {
+    nextBtn.style.visibility = 'hidden';
+  } else {
+    nextBtn.style.visibility = 'visible';
+  }
+  
   // 更新迷你地图
   renderMiniMap();
   
@@ -12101,6 +12110,15 @@ function updateSlide() {
 }
 
 function nextSlide() {
+  // 测试页（倒数第2页）未全对时禁止翻页到庆祝页
+  if (currentSlide === totalSlides - 2 && quizCorrectCount < quizTotalQuestions) {
+    // 滚动到测试区域提示用户
+    const quizContainer = document.querySelector('.slide.active .quiz-container');
+    if (quizContainer) {
+      quizContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+    return;
+  }
   if (currentSlide < totalSlides - 1) {
     ttsStop(); // 停止当前语音
     currentSlide++;
@@ -12132,6 +12150,11 @@ function toggleNotes() {
 // 键盘导航
 document.addEventListener('keydown', (e) => {
   if (e.key === 'ArrowRight' || e.key === ' ') {
+    // 测试页未全对时禁止翻页
+    if (currentSlide === totalSlides - 2 && quizCorrectCount < quizTotalQuestions) {
+      e.preventDefault();
+      return;
+    }
     e.preventDefault();
     nextSlide();
   } else if (e.key === 'ArrowLeft') {
@@ -12179,6 +12202,7 @@ const feedbacks = {
 let quizCorrectCount = 0;
 const quizTotalQuestions = 4;
 let quizAnswered = new Set();
+let quizAnswers = {}; // 记录每题当前答案状态：{qNum: 'correct'/'wrong'}
 
 function checkAnswer(option, answer) {
   const question = option.closest('.quiz-question');
@@ -12187,50 +12211,55 @@ function checkAnswer(option, answer) {
   const qNum = question.parentElement.querySelectorAll('.quiz-question').length > 0 ? 
     Array.from(question.parentElement.querySelectorAll('.quiz-question')).indexOf(question) + 1 : 1;
   
-  // 如果这道题已经答过，不重复计数
-  if (quizAnswered.has(qNum)) return;
+  const feedbackKey = currentCourse + '-' + qNum + '-' + answer;
+  const isCorrect = (answer === correct);
+  const prevState = quizAnswers[qNum]; // 'correct' / 'wrong' / undefined
+  
+  // 更新正确计数（支持修改答案）
+  if (prevState === 'correct' && !isCorrect) {
+    quizCorrectCount--;
+  } else if (prevState !== 'correct' && isCorrect) {
+    quizCorrectCount++;
+  }
+  quizAnswers[qNum] = isCorrect ? 'correct' : 'wrong';
   quizAnswered.add(qNum);
   
-  // 清除之前的状态
+  // 清除之前的选项状态
   question.querySelectorAll('.quiz-option').forEach(opt => {
     opt.classList.remove('correct', 'wrong');
-    opt.style.pointerEvents = 'none';
   });
   
-  const feedbackKey = currentCourse + '-' + qNum + '-' + answer;
-  
-  if (answer === correct) {
+  if (isCorrect) {
     option.classList.add('correct');
     feedback.textContent = '✅ ' + (feedbacks[feedbackKey] || '回答正确！');
     feedback.className = 'quiz-feedback show correct';
-    quizCorrectCount++;
-    
-    // 如果这道题之前在错题本中且现在答对了，从错题本移除
-    removeWrongQuestion(currentCourse, qNum);
-    
-    // 检查是否全部答对
-    if (quizCorrectCount === quizTotalQuestions) {
-      setTimeout(() => {
-        // 在当前slide内查找庆祝按钮，避免重复ID问题
-        const celebrateBtn = question.closest('.slide').querySelector('.celebrate-btn');
-        if (celebrateBtn) {
-          celebrateBtn.style.display = 'block';
-          celebrateBtn.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
-      }, 800);
-    }
+    // 注意：随堂测试答对不从错题本移除，错题本只在错题本中答对后移除
   } else {
     option.classList.add('wrong');
+    // 高亮正确答案
     question.querySelectorAll('.quiz-option').forEach(opt => {
       if (opt.textContent.trim().startsWith(correct)) {
         opt.classList.add('correct');
       }
     });
-    feedback.textContent = '❌ ' + (feedbacks[feedbackKey] || '回答错误，再想想？') + ' 正确答案是 ' + correct;
+    feedback.textContent = '❌ ' + (feedbacks[feedbackKey] || '回答错误，可以修改答案重试。') + ' 正确答案是 ' + correct;
     feedback.className = 'quiz-feedback show wrong';
     
-    // 记录到错题本
+    // 记录到错题本（已有去重逻辑，不会重复添加）
     addWrongQuestion(currentCourse, qNum, question, answer, correct);
+  }
+  
+  // 检查是否全部答对，控制庆祝按钮显示
+  const celebrateBtn = question.closest('.slide').querySelector('.celebrate-btn');
+  if (quizCorrectCount === quizTotalQuestions) {
+    if (celebrateBtn) {
+      celebrateBtn.style.display = 'block';
+      celebrateBtn.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  } else {
+    if (celebrateBtn) {
+      celebrateBtn.style.display = 'none';
+    }
   }
 }
 
