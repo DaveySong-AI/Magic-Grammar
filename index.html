@@ -1121,6 +1121,81 @@
     color: var(--gold);
   }
 
+  /* 免责声明框 */
+  .disclaimer-box {
+    max-width: 900px;
+    margin: 2vh auto 0;
+    padding: 2vh 3vw;
+    background: rgba(255,107,157,.08);
+    border: 2px solid rgba(255,107,157,.35);
+    border-radius: 16px;
+    text-align: left;
+    position: relative;
+    z-index: 1;
+    backdrop-filter: blur(6px);
+  }
+  .disclaimer-box .disclaimer-title {
+    font-size: clamp(14px, 1.6vw, 18px);
+    color: #ff6b9d;
+    font-weight: bold;
+    margin-bottom: 1vh;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .disclaimer-box .disclaimer-text {
+    font-size: clamp(11px, 1.2vw, 14px);
+    color: var(--text-light);
+    line-height: 1.7;
+    margin-bottom: 0.8vh;
+  }
+  .disclaimer-box .disclaimer-text.en {
+    font-size: clamp(10px, 1.1vw, 13px);
+    color: rgba(232,232,240,.7);
+    font-style: italic;
+  }
+
+  /* 页脚联系信息 */
+  .site-footer {
+    text-align: center;
+    padding: 3vh 2vw 4vh;
+    color: var(--text-light);
+    font-size: clamp(11px, 1.2vw, 14px);
+    position: relative;
+    z-index: 1;
+    border-top: 1px solid rgba(255,215,0,.15);
+    margin-top: 2vh;
+  }
+  .site-footer .footer-links {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    margin-bottom: 1vh;
+  }
+  .site-footer .footer-links a {
+    color: var(--cyan);
+    text-decoration: none;
+    transition: color .3s;
+    word-break: break-all;
+  }
+  .site-footer .footer-links a:hover {
+    color: var(--gold);
+    text-decoration: underline;
+  }
+  .site-footer .footer-contact {
+    margin-bottom: 1vh;
+    color: rgba(232,232,240,.8);
+  }
+  .site-footer .footer-contact span {
+    margin: 0 0.8rem;
+  }
+  .site-footer .copyright {
+    color: rgba(232,232,240,.5);
+    font-size: clamp(10px, 1.1vw, 13px);
+  }
+
   @media (max-width: 768px) {
     .map-area { height: 400px; }
     .level-circle { width: 48px; height: 48px; }
@@ -1322,9 +1397,27 @@
 
 </div>
 
+<!-- 免责声明 -->
+<div class="disclaimer-box">
+  <div class="disclaimer-title">⚠️ 免责声明 / Disclaimer</div>
+  <div class="disclaimer-text">本项目为个人学习与非营利用途之作，其语法体系与思路参考自旋元佑老师所著《英语魔法师之语法俱乐部》。本书版权归原作者所有，本项目任何内容均不得用于商业营利目的。如有侵权，请联系作者下架。</div>
+  <div class="disclaimer-text en">This project is for personal study and non-commercial purposes only. Its grammar system and approach reference 旋元佑's <em>English Magic: The Grammar Club</em>. All rights to the original book belong to the author. No content from this project may be used for commercial purposes. If any infringement is found, please contact the author for takedown.</div>
+</div>
+
 <div class="map-footer">
   <p>📚 基于旋元佑《英语魔法师之语法俱乐部》| 适合小学/初中学生 | 女老师语音讲解</p>
   <div class="tip">💡 点击关卡开始学习，完成后关卡会变成金色 ⭐ 按顺序解锁下一关</div>
+</div>
+
+<!-- 页脚：联系方式、GitHub仓库、版权 -->
+<div class="site-footer">
+  <div class="footer-contact">
+    📧 联系作者：<span>songlinjian@163.com</span> | <span>songlinjian@agent.qq.com</span>
+  </div>
+  <div class="footer-links">
+    <a href="https://github.com/DaveySong-AI/Magic-Grammar" target="_blank" rel="noopener noreferrer">🐙 GitHub 仓库：DaveySong-AI/Magic-Grammar</a>
+  </div>
+  <div class="copyright">Copyright © 2026 Magic Grammar. All rights reserved.</div>
 </div>
 </div>
 
