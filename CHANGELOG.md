@@ -7,6 +7,7 @@
 - ➕ Issue #9（第3课）：补原书 c03s02 全节唯一"不含 be 动词"的过去完成时例句 Many soldiers had died from pneumonia before the discovery of penicillin.（1928 为箭头截止；had+过去分词），教案 §六、大纲 P10、课件 P10 同步并将"had been"口诀放宽为"had + 过去分词"
 - ➕ Issue #20（第14课）：补原书 c14s03 反例 "I like books, whatever the subject, that have illustrations."（成对逗号括的是插入语、从句仍具指示功能仍可用 that，破除"逗号后一律无 that"）与 c14s05 plague 组 "A plague broke out which lasted 20 years."（紧跟先行词反颠三倒四、从句后置更合逻辑），教案 §五、§七 同步
 - ➕ Issue #22（第16课）：补原书 c16s01–s02 命名由来——通行术语"非限定从句（Nonfinite Clauses）/非限定动词"及旋元佑改提"简化从句（Reduced Clauses）"的两因、回溯修辞"清楚+简洁"；教案 §二、大纲 P3、课件 P3（新增说明卡 + 解说词延长）同步
+- ➕ Issue #24（第18课）：补原书 c18s01 告诫"不定词 to V 不能放在介系词后面（如 used to 后要用 Ving）"；教案 §六、大纲 P9、课件 P9（新增⚠️卡 + 记住行 + 解说词延长）同步
 
 ## [V1.2.3] - 2026-08-28
 
