@@ -12695,9 +12695,11 @@ document.addEventListener('keydown', function(e) {
 });
 
 // ========== 管理员功能 ==========
-const ADMIN_KEY = 'magicGrammarAdmin';
-const ADMIN_USER = 'admin';
-const ADMIN_PASS = 'slj821130';
+// 用var而不是const，避免暂时性死区(TDZ)问题：openCourse在这些常量声明之前定义，
+// 但用户点击课程时isAdmin()会访问ADMIN_KEY，const的TDZ会导致"Cannot access before initialization"错误
+var ADMIN_KEY = 'magicGrammarAdmin';
+var ADMIN_USER = 'admin';
+var ADMIN_PASS = 'slj821130';
 
 function isAdmin() { return localStorage.getItem(ADMIN_KEY) === 'true'; }
 
