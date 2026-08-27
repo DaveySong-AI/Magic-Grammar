@@ -4,6 +4,7 @@
 
 ### 内容补录（P2·重要缺失）
 - ➕ Issue #8（第2课）：补原书 c02s03 Sunday 对比例——"要判断专有名词不容易，唯一性看语境"：There are five Sundays this month（可复数→非专有）vs an appointment on Sunday（唯一→专有），并铺垫 the John Smith；教案 §四、大纲 P8、课件 P8 同步
+- ➕ Issue #9（第3课）：补原书 c03s02 全节唯一"不含 be 动词"的过去完成时例句 Many soldiers had died from pneumonia before the discovery of penicillin.（1928 为箭头截止；had+过去分词），教案 §六、大纲 P10、课件 P10 同步并将"had been"口诀放宽为"had + 过去分词"
 
 ## [V1.2.3] - 2026-08-28
 
