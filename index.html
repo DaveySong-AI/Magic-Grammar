@@ -11739,6 +11739,783 @@
   </div>
 </div>
 </div>
+<script>
+// 所有课程音频URL
+const allAudioUrls = {
+  1: ['https://aka.doubaocdn.com/s/B1XmPCs9qa', 'https://aka.doubaocdn.com/s/D0GBfybrDU', 'https://aka.doubaocdn.com/s/YYehybPo9j', 'https://aka.doubaocdn.com/s/9MVCFepQPW', 'https://aka.doubaocdn.com/s/WbSo2YGnLU', 'https://aka.doubaocdn.com/s/ZTC3Uk2sCg', 'https://aka.doubaocdn.com/s/8ayqISFNfL', 'https://aka.doubaocdn.com/s/4c5OPwZCT3', 'https://aka.doubaocdn.com/s/KBLT4WupgV', 'https://aka.doubaocdn.com/s/hk3MUMMwqw', 'https://aka.doubaocdn.com/s/7U8BxgMAl5', 'https://aka.doubaocdn.com/s/b7kkOHY0Ub', 'https://aka.doubaocdn.com/s/te7UKLZ5DX', 'https://aka.doubaocdn.com/s/Cc5egUzlbe', 'https://aka.doubaocdn.com/s/88Nn7OJ3pU', 'https://aka.doubaocdn.com/s/t1wT24UNxR'],
+  2: ['https://aka.doubaocdn.com/s/OWonW8IFQN', 'https://aka.doubaocdn.com/s/II7nhTgMLI', 'https://aka.doubaocdn.com/s/Bbruf3hvt0', 'https://aka.doubaocdn.com/s/VQOk4X3Ovd', 'https://aka.doubaocdn.com/s/M4LQ4Jit9S', 'https://aka.doubaocdn.com/s/5d5s2w0FgI', 'https://aka.doubaocdn.com/s/jNR5vtiZo9', 'https://aka.doubaocdn.com/s/nx6GY5wU5V', 'https://aka.doubaocdn.com/s/f8du5VQTp1', 'https://aka.doubaocdn.com/s/qXOo6nyMX9', 'https://aka.doubaocdn.com/s/8EDazXesx4', 'https://aka.doubaocdn.com/s/4BOB82OF6R', 'https://aka.doubaocdn.com/s/5r3KNjqc5x', 'https://aka.doubaocdn.com/s/xUwyQmba0e', 'https://aka.doubaocdn.com/s/kMWTckHrRx', 'https://aka.doubaocdn.com/s/yEYREOEUIl'],
+  3: ['https://aka.doubaocdn.com/s/qz0FfwdvA6', 'https://aka.doubaocdn.com/s/mk1qgKc7j2', 'https://aka.doubaocdn.com/s/v3frVerJ3C', 'https://aka.doubaocdn.com/s/1eCRn8hEMP', 'https://aka.doubaocdn.com/s/d5VeKD24nR', 'https://aka.doubaocdn.com/s/pGcO47cnpO', 'https://aka.doubaocdn.com/s/jLkBNVban6', 'https://aka.doubaocdn.com/s/IHKdW4RAXr', 'https://aka.doubaocdn.com/s/D1Ly2hVZWK', 'https://aka.doubaocdn.com/s/iOxBjoAWiQ', 'https://aka.doubaocdn.com/s/2JwkAcInXh', 'https://aka.doubaocdn.com/s/VQSjgaJj4o', 'https://aka.doubaocdn.com/s/dbnavS1Ien', 'https://aka.doubaocdn.com/s/dLDbskORWn', 'https://aka.doubaocdn.com/s/R3HjBVgJ92', 'https://aka.doubaocdn.com/s/nbyKLbBfgd'],
+  4: ['https://aka.doubaocdn.com/s/HXrtUWCpmK', 'https://aka.doubaocdn.com/s/etXpTUfpPf', 'https://aka.doubaocdn.com/s/9Vxr4IOlqv', 'https://aka.doubaocdn.com/s/3B7HERoxnH', 'https://aka.doubaocdn.com/s/qtBplskjEU', 'https://aka.doubaocdn.com/s/1VFLv790Vj', 'https://aka.doubaocdn.com/s/l5dnidjywh', 'https://aka.doubaocdn.com/s/SjzFYqDFgL', 'https://aka.doubaocdn.com/s/bkNnU96qO8', 'https://aka.doubaocdn.com/s/e5JTOCX2jX', 'https://aka.doubaocdn.com/s/mPBsPmHZGw', 'https://aka.doubaocdn.com/s/MyOxEUV15z', 'https://aka.doubaocdn.com/s/7o5Bz6An4p', 'https://aka.doubaocdn.com/s/7dyuVZmMXU', 'https://aka.doubaocdn.com/s/XLyixlYGGQ', 'https://aka.doubaocdn.com/s/qZUL3NwglU'],
+  5: ['https://aka.doubaocdn.com/s/wMQS63DYh5', 'https://aka.doubaocdn.com/s/Uu79hvAHhe', 'https://aka.doubaocdn.com/s/3GLun0PGtb', 'https://aka.doubaocdn.com/s/eaLhb69Whh', 'https://aka.doubaocdn.com/s/ShHFtXL3VH', 'https://aka.doubaocdn.com/s/ekYXp6v7jL', 'https://aka.doubaocdn.com/s/ruhwUPQoTg', 'https://aka.doubaocdn.com/s/sqQYsFjeIV', 'https://aka.doubaocdn.com/s/vRsCbfUxVz', 'https://aka.doubaocdn.com/s/eU6KbqqJxO', 'https://aka.doubaocdn.com/s/GQCdGM7t1M', 'https://aka.doubaocdn.com/s/i626qo5UIO', 'https://aka.doubaocdn.com/s/BBSqQQOmV8', 'https://aka.doubaocdn.com/s/aTgmEIuj5N', 'https://aka.doubaocdn.com/s/SAetsYPTvF', 'https://aka.doubaocdn.com/s/tckdVoLmLn'],
+  6: ['https://aka.doubaocdn.com/s/YjKUkicoud', 'https://aka.doubaocdn.com/s/2gvB7L2o0R', 'https://aka.doubaocdn.com/s/Y3fjCPhpoU', 'https://aka.doubaocdn.com/s/SB7T2rvW9T', 'https://aka.doubaocdn.com/s/G9xIR3c8gE', 'https://aka.doubaocdn.com/s/FkqODsPF9a', 'https://aka.doubaocdn.com/s/VuW5IrMiKm', 'https://aka.doubaocdn.com/s/sVDiVflRHA', 'https://aka.doubaocdn.com/s/hNRyCIVVV9', 'https://aka.doubaocdn.com/s/bvneViks6z', 'https://aka.doubaocdn.com/s/5jvzmOaf7v', 'https://aka.doubaocdn.com/s/4Vn429mwtK', 'https://aka.doubaocdn.com/s/TE07a9UPEO', 'https://aka.doubaocdn.com/s/5hkpecfsY7', 'https://aka.doubaocdn.com/s/UWljxualy1', 'https://aka.doubaocdn.com/s/TS3MtGdoCl'],
+  7: ['https://aka.doubaocdn.com/s/qdyOV68HoX', 'https://aka.doubaocdn.com/s/FJpK5faeuw', 'https://aka.doubaocdn.com/s/sUeVqF1Va0', 'https://aka.doubaocdn.com/s/iDtVEdEjgA', 'https://aka.doubaocdn.com/s/AorB9odJT5', 'https://aka.doubaocdn.com/s/LDmPng9HJa', 'https://aka.doubaocdn.com/s/uREu2uIHx7', 'https://aka.doubaocdn.com/s/GqZ0VV2vMU', 'https://aka.doubaocdn.com/s/rfFVWJRJ0O', 'https://aka.doubaocdn.com/s/VkwfyQDsWH', 'https://aka.doubaocdn.com/s/7IouizmZlR', 'https://aka.doubaocdn.com/s/NFLrcJRZp7', 'https://aka.doubaocdn.com/s/JSr9W4R3Q4', 'https://aka.doubaocdn.com/s/UA2VUeXdXv', 'https://aka.doubaocdn.com/s/bM3g4tUyc8', 'https://aka.doubaocdn.com/s/41rEd5wpZh'],
+  8: ['https://aka.doubaocdn.com/s/7B5hUW2uOM', 'https://aka.doubaocdn.com/s/lbS1Mv1tUK', 'https://aka.doubaocdn.com/s/vJZVhOFRdH', 'https://aka.doubaocdn.com/s/kaLOleVdQ0', 'https://aka.doubaocdn.com/s/YSHoJxA9pd', 'https://aka.doubaocdn.com/s/b4OBC2XEYx', 'https://aka.doubaocdn.com/s/tRrDybKHVk', 'https://aka.doubaocdn.com/s/XZTXhV6jX8', 'https://aka.doubaocdn.com/s/YMpDKDE7mI', 'https://aka.doubaocdn.com/s/RbMPZbEhdx', 'https://aka.doubaocdn.com/s/kenmNCEwi0', 'https://aka.doubaocdn.com/s/NGgUgNgbEV', 'https://aka.doubaocdn.com/s/nSZdnW70cv', 'https://aka.doubaocdn.com/s/vWwftJ9dvL', 'https://aka.doubaocdn.com/s/tCJ2EdV29D', 'https://aka.doubaocdn.com/s/UUUKnU1tkk'],
+  9: ['https://aka.doubaocdn.com/s/IZzeGJnxdY', 'https://aka.doubaocdn.com/s/ys6EgUwe1M', 'https://aka.doubaocdn.com/s/BdItgBzI0d', 'https://aka.doubaocdn.com/s/Pwjo3rtLhz', 'https://aka.doubaocdn.com/s/b1uYyihUgO', 'https://aka.doubaocdn.com/s/OegF74HuMr', 'https://aka.doubaocdn.com/s/XVHDKgKFPc', 'https://aka.doubaocdn.com/s/4RrOG1U04L', 'https://aka.doubaocdn.com/s/cQ4jJeEGoU', 'https://aka.doubaocdn.com/s/41WloO8gL3', 'https://aka.doubaocdn.com/s/DUMBXfeEd5', 'https://aka.doubaocdn.com/s/nenwzutyu4', 'https://aka.doubaocdn.com/s/XHlpBicTST', 'https://aka.doubaocdn.com/s/bLC7zrHqPf', 'https://aka.doubaocdn.com/s/1mYSKH2c2i', 'https://aka.doubaocdn.com/s/ZY1mAyD7GA'],
+  10: ['https://aka.doubaocdn.com/s/VDKaOVq133', 'https://aka.doubaocdn.com/s/W9aaUVis1d', 'https://aka.doubaocdn.com/s/X1DVe9v4IQ', 'https://aka.doubaocdn.com/s/WQNUGhVmtS', 'https://aka.doubaocdn.com/s/Bey5NVCHjf', 'https://aka.doubaocdn.com/s/G2Rwk2I4hF', 'https://aka.doubaocdn.com/s/S5qYAUQ9xc', 'https://aka.doubaocdn.com/s/pr7VUmf5iH', 'https://aka.doubaocdn.com/s/d5ihkBIDrc', 'https://aka.doubaocdn.com/s/4SGBpxgNqU', 'https://aka.doubaocdn.com/s/FaGpHnwfIr', 'https://aka.doubaocdn.com/s/rVKcEmXGXp', 'https://aka.doubaocdn.com/s/Sgbhu8gI7N', 'https://aka.doubaocdn.com/s/Ox5zkOocqe', 'https://aka.doubaocdn.com/s/Alay8R9Vxe', 'https://aka.doubaocdn.com/s/gxZ1dLCnTV'],
+  11: ['https://aka.doubaocdn.com/s/YrhQMSvRF6', 'https://aka.doubaocdn.com/s/SOXP6iBOCo', 'https://aka.doubaocdn.com/s/RR4QzqZjoi', 'https://aka.doubaocdn.com/s/UAVpfnT0b0', 'https://aka.doubaocdn.com/s/6ZlwHD69Hq', 'https://aka.doubaocdn.com/s/F68btdO2GM', 'https://aka.doubaocdn.com/s/WaU1w3UYuk', 'https://aka.doubaocdn.com/s/7YYNolYjsY', 'https://aka.doubaocdn.com/s/iOLQyoprfs', 'https://aka.doubaocdn.com/s/MmKKUC2uTM', 'https://aka.doubaocdn.com/s/t8x92ryNQ5', 'https://aka.doubaocdn.com/s/LdtqLCh2Op', 'https://aka.doubaocdn.com/s/tkWHasP0LP', 'https://aka.doubaocdn.com/s/tH9M4yqLMU', 'https://aka.doubaocdn.com/s/v8OYy8GM7o', 'https://aka.doubaocdn.com/s/43NSqbjEna'],
+  12: ['https://aka.doubaocdn.com/s/fA9rnQSqiu', 'https://aka.doubaocdn.com/s/L9fMx0ydze', 'https://aka.doubaocdn.com/s/ulHXAr65i9', 'https://aka.doubaocdn.com/s/OxNnCSO5PW', 'https://aka.doubaocdn.com/s/uFYYgew1FK', 'https://aka.doubaocdn.com/s/GPM1nRoMpV', 'https://aka.doubaocdn.com/s/l8Lu7ft052', 'https://aka.doubaocdn.com/s/4OyHr312hd', 'https://aka.doubaocdn.com/s/ASyaA1Lckx', 'https://aka.doubaocdn.com/s/rVKvLBqdnd', 'https://aka.doubaocdn.com/s/P4r6LBn9it', 'https://aka.doubaocdn.com/s/kDvzbjn4vS', 'https://aka.doubaocdn.com/s/ZtN87dsloK', 'https://aka.doubaocdn.com/s/BFrYZYjRbM', 'https://aka.doubaocdn.com/s/BmsU3BBmYP', 'https://aka.doubaocdn.com/s/W9U48zQ32T'],
+  13: ['https://aka.doubaocdn.com/s/i2fGxklFRN', 'https://aka.doubaocdn.com/s/1UelWYhUmK', 'https://aka.doubaocdn.com/s/Mq5WaMHmuZ', 'https://aka.doubaocdn.com/s/CKcDGQTt5w', 'https://aka.doubaocdn.com/s/XsMUEWYs0E', 'https://aka.doubaocdn.com/s/YBZV2ydal2', 'https://aka.doubaocdn.com/s/Me85LZkwvy', 'https://aka.doubaocdn.com/s/mcM7ncyNFt', 'https://aka.doubaocdn.com/s/VVGD2M6FPx', 'https://aka.doubaocdn.com/s/QGlnZELVWK', 'https://aka.doubaocdn.com/s/SxmapVQF78', 'https://aka.doubaocdn.com/s/mXYGKS8x2g', 'https://aka.doubaocdn.com/s/135Ogu59Ub', 'https://aka.doubaocdn.com/s/2dCAIHOvcM', 'https://aka.doubaocdn.com/s/KL63UgA0mX', 'https://aka.doubaocdn.com/s/tp7V6bvJ4q'],
+  14: ['https://aka.doubaocdn.com/s/ylxkO7sVjI', 'https://aka.doubaocdn.com/s/GYcJCFjUsM', 'https://aka.doubaocdn.com/s/a89vpzC70N', 'https://aka.doubaocdn.com/s/Ipr4GEanpS', 'https://aka.doubaocdn.com/s/nLFVCUiWtZ', 'https://aka.doubaocdn.com/s/VeKHQ02Y1E', 'https://aka.doubaocdn.com/s/RyHKa2Pg6p', 'https://aka.doubaocdn.com/s/kQkxSCQsag', 'https://aka.doubaocdn.com/s/DP0usv5yab', 'https://aka.doubaocdn.com/s/8F85NPOvnW', 'https://aka.doubaocdn.com/s/hmQzU8L7Ax', 'https://aka.doubaocdn.com/s/6xpWvBLNLR', 'https://aka.doubaocdn.com/s/R8VrdvJLrw', 'https://aka.doubaocdn.com/s/hUwqSsT5B5', 'https://aka.doubaocdn.com/s/xWJvLsxUKi', 'https://aka.doubaocdn.com/s/EeVhsbVB6s'],
+  15: ['https://aka.doubaocdn.com/s/1s5qBIq9UP', 'https://aka.doubaocdn.com/s/XBCz3Uqead', 'https://aka.doubaocdn.com/s/7ISaGvgmvS', 'https://aka.doubaocdn.com/s/5hz5U9hN4J', 'https://aka.doubaocdn.com/s/2Lc0dnjr22', 'https://aka.doubaocdn.com/s/Vo1ZGHo9XW', 'https://aka.doubaocdn.com/s/32RJff1boN', 'https://aka.doubaocdn.com/s/Uwr8rUxuAt', 'https://aka.doubaocdn.com/s/56vs6QcVfH', 'https://aka.doubaocdn.com/s/w3p0Nf9Z5f', 'https://aka.doubaocdn.com/s/xQY8VWTN39', 'https://aka.doubaocdn.com/s/UjQCMMkUq5', 'https://aka.doubaocdn.com/s/Vvg5w41vUM', 'https://aka.doubaocdn.com/s/ufQ6kiCyna', 'https://aka.doubaocdn.com/s/TCLJAd2eNW', 'https://aka.doubaocdn.com/s/SOu8EASpny'],
+  16: ['https://aka.doubaocdn.com/s/Q9p0Vg0OV4', 'https://aka.doubaocdn.com/s/Ag1T2QSkea', 'https://aka.doubaocdn.com/s/mD8KCato53', 'https://aka.doubaocdn.com/s/2oNq2zMzqi', 'https://aka.doubaocdn.com/s/6Koj5zVJZT', 'https://aka.doubaocdn.com/s/sitcGxN9Ql', 'https://aka.doubaocdn.com/s/Iy8yBeGEFJ', 'https://aka.doubaocdn.com/s/mmUgCV9FNW', 'https://aka.doubaocdn.com/s/HUqu3MKBVB', 'https://aka.doubaocdn.com/s/EIkGxPt25v', 'https://aka.doubaocdn.com/s/Ymj4BTFEPS', 'https://aka.doubaocdn.com/s/mG2CISe8Mj', 'https://aka.doubaocdn.com/s/DRB2bhftmK', 'https://aka.doubaocdn.com/s/a8zjYkoa7G', 'https://aka.doubaocdn.com/s/kwudLnMU54', 'https://aka.doubaocdn.com/s/EzxUEnQVkc'],
+  17: ['https://aka.doubaocdn.com/s/PlJRysKnnE', 'https://aka.doubaocdn.com/s/lusfshmtr4', 'https://aka.doubaocdn.com/s/tq59CtKbHW', 'https://aka.doubaocdn.com/s/2jEyBijnVa', 'https://aka.doubaocdn.com/s/Wt8VlhCuxw', 'https://aka.doubaocdn.com/s/IDy1b8pXM9', 'https://aka.doubaocdn.com/s/zYvGoUMgUQ', 'https://aka.doubaocdn.com/s/bx9URqJJez', 'https://aka.doubaocdn.com/s/Dhhz546uUa', 'https://aka.doubaocdn.com/s/Vo5CJmpNcT', 'https://aka.doubaocdn.com/s/JJLXZUFj1A', 'https://aka.doubaocdn.com/s/NAuAY8xKaj', 'https://aka.doubaocdn.com/s/0yUwbJiYaO', 'https://aka.doubaocdn.com/s/ko9oxY7Y7j', 'https://aka.doubaocdn.com/s/snnvKxr6v6', 'https://aka.doubaocdn.com/s/iuIDVXuHTG'],
+  18: ['https://aka.doubaocdn.com/s/ux3ZxrE4rJ', 'https://aka.doubaocdn.com/s/c8TxTx7JVT', 'https://aka.doubaocdn.com/s/z29EYoV3ND', 'https://aka.doubaocdn.com/s/MmA0lFEOWs', 'https://aka.doubaocdn.com/s/rkRagSBQAK', 'https://aka.doubaocdn.com/s/dU8nFZDfaQ', 'https://aka.doubaocdn.com/s/Rknq2e2OgE', 'https://aka.doubaocdn.com/s/1cALy3PSgX', 'https://aka.doubaocdn.com/s/29K24m1d4G', 'https://aka.doubaocdn.com/s/N4NWLO3Sqq', 'https://aka.doubaocdn.com/s/G6l1by9P2a', 'https://aka.doubaocdn.com/s/ESDtTIWPnX', 'https://aka.doubaocdn.com/s/Y7O0woO7Tt', 'https://aka.doubaocdn.com/s/BE6r4Kgj01', 'https://aka.doubaocdn.com/s/fCffMYhJmK', 'https://aka.doubaocdn.com/s/W0faGSAqTV'],
+  19: ['https://aka.doubaocdn.com/s/zE99tqcBxh', 'https://aka.doubaocdn.com/s/ylfrTLOddQ', 'https://aka.doubaocdn.com/s/E3ByoAoDgN', 'https://aka.doubaocdn.com/s/UWEfAKZjmV', 'https://aka.doubaocdn.com/s/OrNpUIASiI', 'https://aka.doubaocdn.com/s/A5ATkGBPM6', 'https://aka.doubaocdn.com/s/YdG2y7OMTP', 'https://aka.doubaocdn.com/s/yBwDVSBN9j', 'https://aka.doubaocdn.com/s/GocYJGuvjo', 'https://aka.doubaocdn.com/s/502jWFpRxj', 'https://aka.doubaocdn.com/s/n4ms2AO0L7', 'https://aka.doubaocdn.com/s/MjzVgSSlYE', 'https://aka.doubaocdn.com/s/9clYh8MbUP', 'https://aka.doubaocdn.com/s/dmNa8zby62', 'https://aka.doubaocdn.com/s/OEdUUxIfPx', 'https://aka.doubaocdn.com/s/x7ZWu0yaP5'],
+  20: ['https://aka.doubaocdn.com/s/UVlcyMsckG', 'https://aka.doubaocdn.com/s/GKRVcB7kcE', 'https://aka.doubaocdn.com/s/kBS4Pd28oC', 'https://aka.doubaocdn.com/s/dm9kG6tYk6', 'https://aka.doubaocdn.com/s/PJUW9nYiIf', 'https://aka.doubaocdn.com/s/wGHnnVCuRa', 'https://aka.doubaocdn.com/s/wRsyT1TRfU', 'https://aka.doubaocdn.com/s/er1vlkoQfj', 'https://aka.doubaocdn.com/s/XCoaykOd6F', 'https://aka.doubaocdn.com/s/7T4gmeNLYQ', 'https://aka.doubaocdn.com/s/ZqhsYEXTRI', 'https://aka.doubaocdn.com/s/IUoa3UziYv', 'https://aka.doubaocdn.com/s/J30nwDbxfZ', 'https://aka.doubaocdn.com/s/tUrfr3Xe70', 'https://aka.doubaocdn.com/s/EKatcAIlZH', 'https://aka.doubaocdn.com/s/YeGIz5zlIC'],
+  21: ['https://aka.doubaocdn.com/s/TVBUMjnV8n', 'https://aka.doubaocdn.com/s/bnwmxBuA8c', 'https://aka.doubaocdn.com/s/9eRBweBZLF', 'https://aka.doubaocdn.com/s/HlsPeUgE8H', 'https://aka.doubaocdn.com/s/XUXIHopcR5', 'https://aka.doubaocdn.com/s/Ey9NB7PvV6', 'https://aka.doubaocdn.com/s/GopoAJZTbv', 'https://aka.doubaocdn.com/s/rucKJ6Ux4y', 'https://aka.doubaocdn.com/s/hXWchoaOHq', 'https://aka.doubaocdn.com/s/h1CHCEZW0s', 'https://aka.doubaocdn.com/s/GPsxARt8ZI', 'https://aka.doubaocdn.com/s/n4VaIgskag', 'https://aka.doubaocdn.com/s/43eaFTVAEb', 'https://aka.doubaocdn.com/s/iK3JkFBLP0', 'https://aka.doubaocdn.com/s/pqbFnJUadJ', 'https://aka.doubaocdn.com/s/gr3wmtr5KV'],
+  22: ['https://aka.doubaocdn.com/s/eSnEqU2nAd', 'https://aka.doubaocdn.com/s/V7ND8QfZnt', 'https://aka.doubaocdn.com/s/SkyawK1P1c', 'https://aka.doubaocdn.com/s/49PSTUjWxY', 'https://aka.doubaocdn.com/s/VHfSngcUaC', 'https://aka.doubaocdn.com/s/NYELbVTyLx', 'https://aka.doubaocdn.com/s/EiAbUv3v2g', 'https://aka.doubaocdn.com/s/grUNgJkDGr', 'https://aka.doubaocdn.com/s/x7ISURwzPI', 'https://aka.doubaocdn.com/s/UNzJPYp4IX', 'https://aka.doubaocdn.com/s/4qLlNRGuUv', 'https://aka.doubaocdn.com/s/hJf0hE9wMQ', 'https://aka.doubaocdn.com/s/pJ4k2HUtQH', 'https://aka.doubaocdn.com/s/ShDShVpptj', 'https://aka.doubaocdn.com/s/bBLbYyP22q', 'https://aka.doubaocdn.com/s/jvAEVg8Abb'],
+};
+
+
+// 首页JS
+
+const starsContainer = document.getElementById('stars');
+for(let i=0;i<80;i++){
+  const s=document.createElement('div');
+  s.className='star';
+  s.style.left=Math.random()*100+'%';
+  s.style.top=Math.random()*100+'%';
+  s.style.width=Math.random()*3+1+'px';
+  s.style.height=s.style.width;
+  s.style.animationDelay=Math.random()*3+'s';
+  starsContainer.appendChild(s);
+}
+
+const courses = [
+  {num:1,title:"基本句型及补语",part:1,file:"第01课_基本句型及补语.html",x:8,y:82,map:"forestMap"},
+  {num:2,title:"名词词组与冠词",part:1,file:"第02课_名词词组与冠词.html",x:20,y:68,map:"forestMap"},
+  {num:3,title:"动词时态",part:1,file:"第03课_动词时态.html",x:33,y:78,map:"forestMap"},
+  {num:4,title:"不定词短语",part:1,file:"第04课_不定词短语.html",x:46,y:62,map:"forestMap"},
+  {num:5,title:"动名词",part:1,file:"第05课_动名词.html",x:58,y:72,map:"forestMap"},
+  {num:6,title:"分词",part:1,file:"第06课_分词.html",x:70,y:56,map:"forestMap"},
+  {num:7,title:"形容词",part:1,file:"第07课_形容词.html",x:82,y:66,map:"forestMap"},
+  {num:8,title:"副词",part:1,file:"第08课_副词.html",x:75,y:48,map:"forestMap"},
+  {num:9,title:"语气",part:1,file:"第09课_语气.html",x:60,y:40,map:"forestMap"},
+  {num:10,title:"介系词",part:1,file:"第10课_介系词.html",x:42,y:48,map:"forestMap"},
+  {num:11,title:"主语动词一致性",part:1,file:"第11课_主语动词一致性.html",x:25,y:32,map:"forestMap"},
+  {num:12,title:"名词从句",part:2,file:"第12课_名词从句.html",x:15,y:75,map:"snowMap"},
+  {num:13,title:"副词从句",part:2,file:"第13课_副词从句.html",x:38,y:55,map:"snowMap"},
+  {num:14,title:"关系从句",part:2,file:"第14课_关系从句.html",x:60,y:65,map:"snowMap"},
+  {num:15,title:"对等连接词与对等从句",part:2,file:"第15课_对等连接词与对等从句.html",x:82,y:45,map:"snowMap"},
+  {num:16,title:"从属从句简化的通则",part:3,file:"第16课_从属从句简化的通则.html",x:12,y:80,map:"volcanoMap"},
+  {num:17,title:"形容词从句简化",part:3,file:"第17课_形容词从句简化.html",x:28,y:62,map:"volcanoMap"},
+  {num:18,title:"名词从句简化",part:3,file:"第18课_名词从句简化.html",x:45,y:72,map:"volcanoMap"},
+  {num:19,title:"副词从句简化之一",part:3,file:"第19课_副词从句简化之一.html",x:60,y:58,map:"volcanoMap"},
+  {num:20,title:"副词从句简化之二",part:3,file:"第20课_副词从句简化之二.html",x:75,y:68,map:"volcanoMap"},
+  {num:21,title:"简化从句练习",part:3,file:"第21课_简化从句练习.html",x:68,y:45,map:"volcanoMap"},
+  {num:22,title:"倒装句",part:3,file:"第22课_倒装句.html",x:50,y:28,map:"volcanoMap",boss:true}
+];
+
+function getProgress(){try{return JSON.parse(localStorage.getItem('englishGrammarProgress')||'{}');}catch(e){return{};}}
+function saveProgress(p){localStorage.setItem('englishGrammarProgress',JSON.stringify(p));}
+function resetProgress(){if(confirm('确定要重置所有冒险进度吗？')){localStorage.removeItem('englishGrammarProgress');renderMap();}}
+function getLevelState(c,p){if(p[c.num])return'completed';if(c.num===1)return'available';if(p[c.num-1])return'available';return'locked';}
+
+function renderMap(){
+  const p=getProgress();let done=0;
+  document.querySelectorAll('.level-node').forEach(n=>n.remove());
+  courses.forEach(c=>{
+    const st=getLevelState(c,p);if(st==='completed')done++;
+    const n=document.createElement('div');
+    n.className=`level-node ${st}${c.boss?' boss':''}`;
+    n.style.left=c.x+'%';n.style.top=c.y+'%';
+    n.title=`第${c.num}课：${c.title}`;
+    n.onclick=()=>openCourse(c.num);
+    n.innerHTML=`<div class="level-circle"><span class="level-num">${c.boss?'👑'+c.num:c.num}</span></div><div class="level-label">${c.title}</div>`;
+    document.getElementById(c.map).appendChild(n);
+  });
+  document.getElementById('completedCount').textContent=done;
+  document.getElementById('progressPercent').textContent=Math.round(done/courses.length*100);
+}
+function openCourse(num){
+  const c=courses.find(x=>x.num===num);if(!c)return;
+  const p=getProgress();const st=getLevelState(c,p);
+  if(st==='locked'){const lb=event.currentTarget.querySelector('.level-label');const o=lb.textContent;lb.textContent='🔒 先完成上一关！';setTimeout(()=>lb.textContent=o,1500);return;}
+  showCourse(num);
+}
+renderMap();
+
+
+// 课程切换
+let currentCourse = 0;
+let currentAudioUrls = [];
+
+function showCourse(num) {
+  currentCourse = num;
+  currentAudioUrls = allAudioUrls[num] || [];
+  document.getElementById('homeView').style.display = 'none';
+  document.getElementById('courseView').style.display = 'block';
+  document.querySelectorAll('.course-presentation').forEach(p => {
+    p.style.display = (parseInt(p.dataset.course) === num) ? 'block' : 'none';
+  });
+  const pres = document.querySelector('.course-presentation[data-course="' + num + '"]');
+  slides = pres.querySelectorAll('.slide');
+  totalSlides = slides.length;
+  const indicator = document.getElementById('pageIndicator');
+  indicator.innerHTML = '';
+  for (let i = 0; i < totalSlides; i++) {
+    const dot = document.createElement('div');
+    dot.className = 'dot' + (i === 0 ? ' active' : '');
+    dot.onclick = () => goToSlide(i);
+    indicator.appendChild(dot);
+  }
+  currentSlide = 0;
+  ttsStop();
+  
+  // 重置互动测试状态（Bug修复：切课时不重置导致第2课起测试失效）
+  quizCorrectCount = 0;
+  quizAnswered.clear();
+  // 重置测试页UI：选项可点击、清除对错状态、隐藏反馈、隐藏庆祝按钮
+  const quizSlide = slides[totalSlides - 2]; // 测试页是倒数第2页
+  if (quizSlide) {
+    quizSlide.querySelectorAll('.quiz-option').forEach(opt => {
+      opt.classList.remove('correct', 'wrong');
+      opt.style.pointerEvents = 'auto';
+    });
+    quizSlide.querySelectorAll('.quiz-feedback').forEach(fb => {
+      fb.className = 'quiz-feedback';
+      fb.textContent = '';
+    });
+    const cb = quizSlide.querySelector('.celebrate-btn');
+    if (cb) cb.style.display = 'none';
+  }
+  
+  updateSlide();
+  const course = courses.find(c => c.num === num);
+  if (course) {
+    document.title = '英语魔法师之语法俱乐部 · 第' + num + '课：' + course.title;
+  }
+  window.scrollTo(0, 0);
+}
+
+function goHome() {
+  ttsStop();
+  document.getElementById('courseView').style.display = 'none';
+  document.getElementById('homeView').style.display = 'block';
+  renderMap();
+  document.title = '英语魔法师之语法俱乐部';
+  window.scrollTo(0, 0);
+}
+
+
+// 课程JS框架
+
+// ========== 高质量女老师语音讲解功能 ==========
+// 15页预生成的高质量女老师讲解音频（豆包智能语音引擎）
+let audioPlayer = null;
+let ttsIsPlaying = false;
+let ttsIsPaused = false;
+let ttsAutoPlay = true;
+let ttsRate = 1.0;
+
+// 初始化音频播放器
+function ttsInit() {
+  audioPlayer = new Audio();
+  audioPlayer.preload = 'auto';
+  audioPlayer.referrerPolicy = 'no-referrer';
+  
+  audioPlayer.addEventListener('ended', () => {
+    ttsIsPlaying = false;
+    ttsIsPaused = false;
+    ttsUpdateUI();
+    document.getElementById('ttsStatus').classList.remove('show');
+    
+    // 自动播放模式：播完自动翻下一页（测试页除外，需学生手动做题）
+    const isQuizPage = (currentSlide === totalSlides - 2);
+    if (ttsAutoPlay && currentSlide < totalSlides - 1 && !isQuizPage) {
+      setTimeout(() => {
+        if (ttsAutoPlay) {
+          nextSlide();
+        }
+      }, 800);
+    }
+  });
+  
+  audioPlayer.addEventListener('error', (e) => {
+    console.log('音频播放错误:', e);
+    ttsIsPlaying = false;
+    ttsIsPaused = false;
+    ttsUpdateUI();
+    document.getElementById('ttsStatus').classList.remove('show');
+  });
+  
+  console.log('高质量女老师语音播放器已初始化');
+}
+
+// 播放当前页讲解音频
+function ttsPlay() {
+  if (!audioPlayer) {
+    ttsInit();
+  }
+  
+  // 如果正在播放，先停止
+  if (ttsIsPlaying) {
+    ttsStop();
+  }
+  
+  const audioUrl = currentAudioUrls[currentSlide];
+  if (!audioUrl) {
+    console.log('本页无音频');
+    return;
+  }
+  
+  audioPlayer.src = audioUrl;
+  audioPlayer.playbackRate = ttsRate;
+  
+  const playPromise = audioPlayer.play();
+  if (playPromise !== undefined) {
+    playPromise.then(() => {
+      ttsIsPlaying = true;
+      ttsIsPaused = false;
+      ttsUpdateUI();
+      document.getElementById('ttsStatusText').textContent = '🎙️ 女老师正在讲解第 ' + (currentSlide + 1) + ' / ' + totalSlides + ' 页';
+      document.getElementById('ttsStatus').classList.add('show');
+    }).catch((err) => {
+      console.log('播放失败:', err);
+      // 浏览器可能阻止自动播放，提示用户点击
+      document.getElementById('ttsStatusText').textContent = '点击页面任意位置后再点播放按钮';
+      document.getElementById('ttsStatus').classList.add('show');
+    });
+  }
+}
+
+// 暂停/继续
+function ttsPause() {
+  if (!ttsIsPlaying || !audioPlayer) return;
+  
+  if (ttsIsPaused) {
+    audioPlayer.play();
+    ttsIsPaused = false;
+    document.getElementById('ttsStatusText').textContent = '🎙️ 女老师正在讲解第 ' + (currentSlide + 1) + ' / ' + totalSlides + ' 页';
+  } else {
+    audioPlayer.pause();
+    ttsIsPaused = true;
+    document.getElementById('ttsStatusText').textContent = '⏸ 已暂停';
+  }
+  ttsUpdateUI();
+}
+
+// 停止
+function ttsStop() {
+  if (audioPlayer) {
+    audioPlayer.pause();
+    audioPlayer.currentTime = 0;
+  }
+  ttsIsPlaying = false;
+  ttsIsPaused = false;
+  ttsUpdateUI();
+  document.getElementById('ttsStatus').classList.remove('show');
+}
+
+// 切换自动播放
+function ttsToggleAuto() {
+  ttsAutoPlay = !ttsAutoPlay;
+  const toggle = document.getElementById('ttsAutoToggle');
+  const icon = document.getElementById('ttsAutoIcon');
+  
+  if (ttsAutoPlay) {
+    toggle.classList.add('active');
+    icon.textContent = '✅';
+    // 开启自动播放时开始播放当前页
+    if (!ttsIsPlaying) {
+      ttsPlay();
+    }
+  } else {
+    toggle.classList.remove('active');
+    icon.textContent = '🔄';
+  }
+}
+
+// 更新语速
+function ttsUpdateSpeed() {
+  ttsRate = parseFloat(document.getElementById('ttsSpeed').value);
+  if (audioPlayer) {
+    audioPlayer.playbackRate = ttsRate;
+  }
+}
+
+// 更新TTS按钮UI
+function ttsUpdateUI() {
+  const playBtn = document.getElementById('ttsPlayBtn');
+  const pauseBtn = document.getElementById('ttsPauseBtn');
+  const stopBtn = document.getElementById('ttsStopBtn');
+  
+  if (ttsIsPlaying) {
+    playBtn.classList.add('playing');
+    pauseBtn.disabled = false;
+    stopBtn.disabled = false;
+    pauseBtn.textContent = ttsIsPaused ? '▶' : '⏸';
+  } else {
+    playBtn.classList.remove('playing');
+    pauseBtn.disabled = true;
+    stopBtn.disabled = true;
+    pauseBtn.textContent = '⏸';
+  }
+}
+
+
+
+// 幻灯片控制
+let currentSlide = 0;
+let slides = [];
+let totalSlides = 0;
+const teacherNote = document.getElementById('teacherNote');
+const noteToggle = document.getElementById('noteToggle');
+let notesVisible = false;
+
+
+
+function updateSlide() {
+  slides.forEach((slide, index) => {
+    slide.classList.toggle('active', index === currentSlide);
+  });
+  document.querySelectorAll('.dot').forEach((dot, index) => {
+    dot.classList.toggle('active', index === currentSlide);
+  });
+  
+  // 更新讲解词
+  const note = slides[currentSlide].dataset.note;
+  if (notesVisible && note) {
+    teacherNote.textContent = note;
+    teacherNote.classList.add('show');
+  } else {
+    teacherNote.classList.remove('show');
+  }
+  
+  // 更新导航按钮状态
+  document.getElementById('prevBtn').disabled = currentSlide === 0;
+  document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+  
+  // 更新迷你地图
+  renderMiniMap();
+  
+  // TTS: 如果开启自动播放，播放新页面的讲解词
+  if (ttsAutoPlay) {
+    setTimeout(() => {
+      if (ttsAutoPlay && !ttsIsPaused) {
+        ttsPlay();
+      }
+    }, 500);
+  }
+}
+
+function nextSlide() {
+  if (currentSlide < totalSlides - 1) {
+    ttsStop(); // 停止当前语音
+    currentSlide++;
+    updateSlide();
+    spawnMagicParticles();
+  }
+}
+
+function prevSlide() {
+  if (currentSlide > 0) {
+    ttsStop(); // 停止当前语音
+    currentSlide--;
+    updateSlide();
+  }
+}
+
+function goToSlide(index) {
+  currentSlide = index;
+  updateSlide();
+}
+
+function toggleNotes() {
+  notesVisible = !notesVisible;
+  noteToggle.classList.toggle('active', notesVisible);
+  noteToggle.textContent = notesVisible ? '📖 隐藏讲解词' : '📖 讲解词';
+  updateSlide();
+}
+
+// 键盘导航
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowRight' || e.key === ' ') {
+    e.preventDefault();
+    nextSlide();
+  } else if (e.key === 'ArrowLeft') {
+    e.preventDefault();
+    prevSlide();
+  }
+});
+
+// 魔法粒子效果
+function spawnMagicParticles() {
+  const emojis = ['✨', '⭐', '🌟', '💫', '🔮'];
+  for (let i = 0; i < 5; i++) {
+    const particle = document.createElement('div');
+    particle.className = 'magic-particle';
+    particle.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+    particle.style.left = (Math.random() * 80 + 10) + '%';
+    particle.style.top = (Math.random() * 60 + 20) + '%';
+    particle.style.animationDelay = (i * 0.1) + 's';
+    document.body.appendChild(particle);
+    setTimeout(() => particle.remove(), 3000);
+  }
+}
+
+// 互动测试反馈（按课号-题号-选项索引，第1课有详细反馈，其他课用通用文案避免串课）
+const feedbacks = {
+  '1-1-C': '正确！proved 是连缀动词（证实为），false 是补语。验证：The story was false. 意思不变。',
+  '1-1-A': '不对哦~ proved 是连缀动词，后面跟的是补语 false，不是 S+V。再想想？',
+  '1-1-B': '不对哦~ proved 是连缀动词，不是及物动词，false 不是宾语。再想想？',
+  '1-1-D': '不对哦~ 这句话只有主语+连缀动词+补语，没有宾语。再想想？',
+  '1-2-C': '正确！a good wife 描述的是宾语 a nurse。检验法：A nurse is a good wife. 成立！',
+  '1-2-A': '不对哦~ a good wife 不是动作的直接承受者，而是描述 a nurse 的。用检验法试试？',
+  '1-2-B': '不对哦~ 间接宾语是动作的对象，这里 a good wife 是补充说明 a nurse 的。',
+  '1-2-D': '不对哦~ 主语补语是描述主语的，这里 a good wife 描述的是宾语 a nurse。',
+  '1-3-C': '正确！kill 是及物动词，需要宾语，不是「是」类动词。seem/become/taste 均可解释为「是」。',
+  '1-3-A': '不对哦~ seem 解释为「似乎是」，是连缀动词。题目问的是不是的那个~',
+  '1-3-B': '不对哦~ become 解释为「成为」，是连缀动词。题目问的是不是的那个~',
+  '1-3-D': '不对哦~ taste 解释为「尝起来是」，是连缀动词。题目问的是不是的那个~',
+  '1-4-B': '正确！am 后面没有补语，此时 be 动词不解释为「是」，而解释为「存在」（笛卡尔「我思故我在」）。',
+  '1-4-A': '不对哦~ am 后面没有补语，这时候不解释为「是」。想想笛卡尔的名言？',
+  '1-4-C': '不对哦~ be 动词没有「有」的意思。再想想？',
+  '1-4-D': '不对哦~ 这是 be 动词的特殊用法，不是 become。想想「我思故我在」？'
+};
+
+// 测试答题统计
+let quizCorrectCount = 0;
+const quizTotalQuestions = 4;
+let quizAnswered = new Set();
+
+function checkAnswer(option, answer) {
+  const question = option.closest('.quiz-question');
+  const correct = question.dataset.correct;
+  const feedback = question.querySelector('.quiz-feedback');
+  const qNum = question.parentElement.querySelectorAll('.quiz-question').length > 0 ? 
+    Array.from(question.parentElement.querySelectorAll('.quiz-question')).indexOf(question) + 1 : 1;
+  
+  // 如果这道题已经答过，不重复计数
+  if (quizAnswered.has(qNum)) return;
+  quizAnswered.add(qNum);
+  
+  // 清除之前的状态
+  question.querySelectorAll('.quiz-option').forEach(opt => {
+    opt.classList.remove('correct', 'wrong');
+    opt.style.pointerEvents = 'none';
+  });
+  
+  const feedbackKey = currentCourse + '-' + qNum + '-' + answer;
+  
+  if (answer === correct) {
+    option.classList.add('correct');
+    feedback.textContent = '✅ ' + (feedbacks[feedbackKey] || '回答正确！');
+    feedback.className = 'quiz-feedback show correct';
+    quizCorrectCount++;
+    
+    // 如果这道题之前在错题本中且现在答对了，从错题本移除
+    removeWrongQuestion(currentCourse, qNum);
+    
+    // 检查是否全部答对
+    if (quizCorrectCount === quizTotalQuestions) {
+      setTimeout(() => {
+        // 在当前slide内查找庆祝按钮，避免重复ID问题
+        const celebrateBtn = question.closest('.slide').querySelector('.celebrate-btn');
+        if (celebrateBtn) {
+          celebrateBtn.style.display = 'block';
+          celebrateBtn.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }, 800);
+    }
+  } else {
+    option.classList.add('wrong');
+    question.querySelectorAll('.quiz-option').forEach(opt => {
+      if (opt.textContent.trim().startsWith(correct)) {
+        opt.classList.add('correct');
+      }
+    });
+    feedback.textContent = '❌ ' + (feedbacks[feedbackKey] || '回答错误，再想想？') + ' 正确答案是 ' + correct;
+    feedback.className = 'quiz-feedback show wrong';
+    
+    // 记录到错题本
+    addWrongQuestion(currentCourse, qNum, question, answer, correct);
+  }
+}
+
+// 跳转到庆祝页面
+function goToCelebrate() {
+  ttsStop();
+  currentSlide = totalSlides - 1; // 庆祝页面是最后一页
+  updateSlide();
+  spawnMagicParticles();
+  
+  // 记录课程通关（Bug修复：打开课程即通关改为完成课程时通关）
+  const p = getProgress();
+  if (!p[currentCourse]) {
+    p[currentCourse] = true;
+    saveProgress(p);
+    renderMap(); // 更新首页进度显示
+  }
+  
+  // 如果开启了自动播放，庆祝页面会自动播放讲解音频
+}
+
+
+// ========== 错题本功能 ==========
+const WRONG_BOOK_KEY = 'englishGrammarWrongBook';
+
+function getWrongBook() {
+  try { return JSON.parse(localStorage.getItem(WRONG_BOOK_KEY)) || []; }
+  catch(e) { return []; }
+}
+
+function saveWrongBook(book) {
+  localStorage.setItem(WRONG_BOOK_KEY, JSON.stringify(book));
+  updateWrongCount();
+}
+
+function addWrongQuestion(courseNum, qNum, questionEl, userAnswer, correctAnswer) {
+  const book = getWrongBook();
+  const id = courseNum + '-' + qNum;
+  // 避免重复添加
+  if (book.find(item => item.id === id)) return;
+  
+  const qText = questionEl.querySelector('.quiz-q-text').textContent.trim();
+  const options = Array.from(questionEl.querySelectorAll('.quiz-option')).map(opt => ({
+    label: opt.textContent.trim().charAt(0),
+    text: opt.textContent.trim()
+  }));
+  const course = courses.find(c => c.num === courseNum);
+  
+  book.push({
+    id: id,
+    courseNum: courseNum,
+    courseTitle: course ? course.title : '第' + courseNum + '课',
+    questionText: qText,
+    options: options,
+    correctAnswer: correctAnswer,
+    userAnswer: userAnswer,
+    timestamp: Date.now()
+  });
+  saveWrongBook(book);
+}
+
+function removeWrongQuestion(courseNum, qNum) {
+  const book = getWrongBook();
+  const id = courseNum + '-' + qNum;
+  const newBook = book.filter(item => item.id !== id);
+  if (newBook.length !== book.length) {
+    saveWrongBook(newBook);
+  }
+}
+
+function updateWrongCount() {
+  const el = document.getElementById('wrongCount');
+  if (el) el.textContent = getWrongBook().length;
+}
+
+function openWrongBook() {
+  document.getElementById('homeView').style.display = 'none';
+  document.getElementById('courseView').style.display = 'none';
+  document.getElementById('wrongBookView').style.display = 'block';
+  renderWrongBook();
+  window.scrollTo(0, 0);
+}
+
+function closeWrongBook() {
+  document.getElementById('wrongBookView').style.display = 'none';
+  document.getElementById('homeView').style.display = 'block';
+  renderMap();
+  window.scrollTo(0, 0);
+}
+
+function renderWrongBook() {
+  const book = getWrongBook();
+  const container = document.getElementById('wrongBookContent');
+  if (book.length === 0) {
+    container.innerHTML = '<div class="wrongbook-empty">🎉 太棒了！还没有错题，继续保持！</div>';
+    return;
+  }
+  // 按课程分组
+  const byCourse = {};
+  book.forEach(item => {
+    if (!byCourse[item.courseNum]) byCourse[item.courseNum] = [];
+    byCourse[item.courseNum].push(item);
+  });
+  
+  let html = '';
+  Object.keys(byCourse).sort((a,b) => a-b).forEach(cn => {
+    byCourse[cn].forEach(item => {
+      html += '<div class="wrong-question-card" data-id="' + item.id + '">';
+      html += '<span class="wq-course">第' + item.courseNum + '课 · ' + item.courseTitle + '</span>';
+      html += '<div class="wq-text">' + item.questionText + '</div>';
+      html += '<div class="wq-options">';
+      item.options.forEach(opt => {
+        html += '<div class="wq-option" data-id="' + item.id + '" data-label="' + opt.label + '">' + opt.text + '</div>';
+      });
+      html += '</div>';
+      html += '<div class="wq-feedback"></div>';
+      html += '<button class="wq-remove" data-rid="' + item.id + '">🗑️ 移出错题本</button>';
+      html += '</div>';
+    });
+  });
+  container.innerHTML = html;
+  // 事件委托：处理错题选项点击
+  container.querySelectorAll('.wq-option').forEach(opt => {
+    opt.addEventListener('click', function() {
+      if (this.classList.contains('disabled')) return;
+      retryWrongAnswer(this, this.dataset.id, this.dataset.label);
+    });
+  });
+  container.querySelectorAll('.wq-remove').forEach(btn => {
+    btn.addEventListener('click', function() {
+      deleteWrongQuestion(this.dataset.rid);
+    });
+  });
+}
+
+function retryWrongAnswer(optionEl, id, answer) {
+  const book = getWrongBook();
+  const item = book.find(x => x.id === id);
+  if (!item) return;
+  
+  const card = optionEl.closest('.wrong-question-card');
+  const feedback = card.querySelector('.wq-feedback');
+  const options = card.querySelectorAll('.wq-option');
+  
+  options.forEach(opt => opt.classList.add('disabled'));
+  
+  if (answer === item.correctAnswer) {
+    optionEl.classList.add('correct');
+    feedback.textContent = '✅ 回答正确！这道题已从错题本移除。';
+    feedback.className = 'wq-feedback show correct';
+    // 延迟移除，让用户看到反馈
+    setTimeout(() => {
+      removeWrongQuestion(item.courseNum, parseInt(item.id.split('-')[1]));
+      card.style.transition = 'all 0.5s';
+      card.style.opacity = '0';
+      card.style.transform = 'translateX(100px)';
+      setTimeout(() => { card.remove(); checkWrongBookEmpty(); }, 500);
+    }, 1500);
+  } else {
+    optionEl.classList.add('wrong');
+    // 高亮正确答案
+    options.forEach(opt => {
+      if (opt.textContent.trim().charAt(0) === item.correctAnswer) {
+        opt.classList.add('correct');
+      }
+    });
+    feedback.textContent = '❌ 回答错误。正确答案是 ' + item.correctAnswer + '，再复习一下吧！';
+    feedback.className = 'wq-feedback show wrong';
+  }
+}
+
+function deleteWrongQuestion(id) {
+  const book = getWrongBook();
+  const newBook = book.filter(item => item.id !== id);
+  saveWrongBook(newBook);
+  renderWrongBook();
+}
+
+function checkWrongBookEmpty() {
+  const container = document.getElementById('wrongBookContent');
+  if (container && container.querySelectorAll('.wrong-question-card').length === 0) {
+    container.innerHTML = '<div class="wrongbook-empty">🎉 太棒了！所有错题都已掌握！</div>';
+  }
+}
+
+// 初始化
+ttsInit();
+updateWrongCount();
+updateSlide();
+
+  // ===== 迷你游戏地图 =====
+  
+
+
+// 迷你地图
+
+function renderMiniMap() {
+  // 找到当前课程的miniMap（而非getElementById只返回第一个）
+  const pres = document.querySelector('.course-presentation[data-course="' + currentCourse + '"]');
+  if (!pres) return;
+  const el = pres.querySelector('.mini-map');
+  if (!el) return;
+  
+  // 根据当前课程区域设置精美地图背景
+  let bgUrl, regionName;
+  if (currentCourse <= 11) {
+    bgUrl = 'https://aka.doubaocdn.com/s/33XTTo2MiS';
+    regionName = '翠绿森林';
+  } else if (currentCourse <= 15) {
+    bgUrl = 'https://aka.doubaocdn.com/s/jQ3WDT2kge';
+    regionName = '冰雪山脉';
+  } else {
+    bgUrl = 'https://aka.doubaocdn.com/s/B52s7BwHgL';
+    regionName = '熔岩火山';
+  }
+  el.style.backgroundImage = 'linear-gradient(rgba(10,10,30,0.75), rgba(10,10,30,0.75)), url(' + bgUrl + ')';
+  el.style.backgroundSize = 'cover';
+  el.style.backgroundPosition = 'center';
+  el.style.border = '2px solid rgba(255,215,0,0.4)';
+  el.style.borderRadius = '12px';
+  el.style.padding = '12px';
+  
+  const p = getProgress();
+  const parts = [
+    {name:'🌲初级',cls:'part1',range:[1,11]},
+    {name:'❄️中级',cls:'part2',range:[12,15]},
+    {name:'🌋高级',cls:'part3',range:[16,22]}
+  ];
+  el.innerHTML = parts.map(pt => {
+    const levels = courses.filter(c => c.num >= pt.range[0] && c.num <= pt.range[1]);
+    return '<div class="mini-map-row"><span class="mini-map-label ' + pt.cls + '">' + pt.name + '</span>' +
+      levels.map(c => {
+        let st;
+        if (c.num === currentCourse) st = 'current';
+        else if (p[c.num]) st = 'completed';
+        else if (c.num === 1) st = 'available';
+        else if (p[c.num-1]) st = 'available';
+        else st = 'locked';
+        const boss = c.num === 22 ? ' boss' : '';
+        const label = c.num === 22 ? '👑' + c.num : c.num;
+        if (st === 'locked') {
+          return '<span class="mini-level locked' + boss + '" title="第' + c.num + '课（未解锁）">' + label + '</span>';
+        }
+        return '<a class="mini-level ' + st + boss + '" href="javascript:void(0)" onclick="showCourse(' + c.num + ')" title="第' + c.num + '课">' + label + '</a>';
+      }).join('') + '</div>';
+  }).join('');
+}
+
+
+
+// 推荐海报模态框
+function openPosterModal() {
+  document.getElementById('posterModal').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+function closePosterModal(event) {
+  if (event && event.target !== event.currentTarget) return;
+  document.getElementById('posterModal').classList.remove('active');
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape' && document.getElementById('posterModal').classList.contains('active')) {
+    closePosterModal();
+  }
+});
+
+// 初始化
+ttsInit();
+updateWrongCount();
+</script>
+
+<!-- 推荐海报模态框 -->
+<div id="posterModal" class="poster-modal" onclick="closePosterModal(event)">
+  <div class="poster-modal-content" onclick="event.stopPropagation()">
+    <button class="poster-modal-close" onclick="closePosterModal()">✕</button>
+    <h3>📢 推荐给朋友</h3>
+    <p class="modal-subtitle">扫码或下载海报，分享给更多小朋友一起学语法！</p>
+    <div class="poster-modal-image">
+      <img src="Magic-Grammar-Poster.png" alt="英语魔法师之语法俱乐部 宣传海报">
+    </div>
+    <div class="poster-modal-actions">
+      <a href="Magic-Grammar-Poster.png" download="英语魔法师之语法俱乐部-海报-3比4.png" class="poster-download-btn">📥 下载 3:4 打印版</a>
+      <a href="Magic-Grammar-Poster-9x16.png" download="英语魔法师之语法俱乐部-海报-9比16.png" class="poster-download-btn secondary">📱 下载 9:16 手机版</a>
+    </div>
+    <p class="poster-modal-tip">💡 手机端可长按海报图片保存到相册，或截图分享到朋友圈/小红书</p>
+  </div>
 </div>
 
 </body>
