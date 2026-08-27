@@ -1525,7 +1525,6 @@
     border-bottom: 2px solid #ffd700;
     padding: 8px 16px;
     z-index: 9998;
-    display: flex;
     align-items: center;
     gap: 12px;
     flex-wrap: wrap;
@@ -12710,17 +12709,21 @@ function adminLogout() {
 
 function initAdminMode() {
   if (!isAdmin()) return;
-  document.getElementById('adminToolbar').classList.add('active');
-  const cs = document.getElementById('adminCourseSelect');
-  cs.innerHTML = '';
-  courses.forEach(c => {
-    const o = document.createElement('option');
-    o.value = c.num;
-    o.textContent = '第' + c.num + '课：' + c.title;
-    cs.appendChild(o);
-  });
-  updateAdminPageSelect();
-  updateAdminStatus();
+  try {
+    document.getElementById('adminToolbar').classList.add('active');
+    const cs = document.getElementById('adminCourseSelect');
+    cs.innerHTML = '';
+    courses.forEach(c => {
+      const o = document.createElement('option');
+      o.value = c.num;
+      o.textContent = '第' + c.num + '课：' + c.title;
+      cs.appendChild(o);
+    });
+    updateAdminPageSelect();
+    updateAdminStatus();
+  } catch(e) {
+    console.error('管理员模式初始化出错:', e);
+  }
 }
 
 function updateAdminPageSelect() {
