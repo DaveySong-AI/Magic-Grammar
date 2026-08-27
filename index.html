@@ -11968,19 +11968,23 @@ function renderMap(){
     n.className=`level-node ${st}${c.boss?' boss':''}`;
     n.style.left=c.x+'%';n.style.top=c.y+'%';
     n.title=`第${c.num}课：${c.title}`;
-    n.onclick=()=>openCourse(c.num);
+    n.onclick=function(e){openCourse(c.num, e);};
     n.innerHTML=`<div class="level-circle"><span class="level-num">${c.boss?'👑'+c.num:c.num}</span></div><div class="level-label">${c.title}</div>`;
     document.getElementById(c.map).appendChild(n);
   });
   document.getElementById('completedCount').textContent=done;
   document.getElementById('progressPercent').textContent=Math.round(done/courses.length*100);
 }
-function openCourse(num){
+function openCourse(num, e){
   const c=courses.find(x=>x.num===num);if(!c)return;
   // 管理员模式跳过锁定检查
   if (!isAdmin()) {
     const p=getProgress();const st=getLevelState(c,p);
-    if(st==='locked'){const lb=event.currentTarget.querySelector('.level-label');const o=lb.textContent;lb.textContent='🔒 先完成上一关！';setTimeout(()=>lb.textContent=o,1500);return;}
+    if(st==='locked'){
+      const node = e ? e.currentTarget : document.querySelector('.level-node[title*="第'+num+'课"]');
+      if(node){const lb=node.querySelector('.level-label');const o=lb.textContent;lb.textContent='🔒 先完成上一关！';setTimeout(()=>lb.textContent=o,1500);}
+      return;
+    }
   }
   showCourse(num);
 }
@@ -12000,6 +12004,7 @@ function showCourse(num) {
     p.style.display = (parseInt(p.dataset.course) === num) ? 'block' : 'none';
   });
   const pres = document.querySelector('.course-presentation[data-course="' + num + '"]');
+  if (!pres) { console.error('找不到课程presentation:', num); alert('课程加载失败，请刷新页面重试'); return; }
   slides = pres.querySelectorAll('.slide');
   totalSlides = slides.length;
   const indicator = document.getElementById('pageIndicator');
