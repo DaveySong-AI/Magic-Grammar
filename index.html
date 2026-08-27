@@ -1442,10 +1442,150 @@
     margin-top: 8px;
   }
 
+  /* 管理员入口 */
+  .admin-entry {
+    position: fixed;
+    bottom: 8px;
+    right: 8px;
+    font-size: 10px;
+    color: rgba(255,255,255,0.15);
+    cursor: pointer;
+    z-index: 100;
+    user-select: none;
+    transition: color 0.3s;
+  }
+  .admin-entry:hover { color: rgba(255,255,255,0.4); }
+
+  /* 管理员登录模态框 */
+  .admin-login-modal {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.85);
+    z-index: 10000;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(6px);
+  }
+  .admin-login-modal.active { display: flex; }
+  .admin-login-box {
+    background: linear-gradient(135deg, #1a1a3a, #2d1b69);
+    border: 2px solid rgba(255,215,0,0.4);
+    border-radius: 16px;
+    padding: 30px;
+    width: 90%;
+    max-width: 360px;
+    text-align: center;
+  }
+  .admin-login-box h3 {
+    color: #ffd700;
+    margin-bottom: 20px;
+    font-size: 20px;
+  }
+  .admin-login-box input {
+    width: 100%;
+    padding: 10px 14px;
+    margin-bottom: 12px;
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 8px;
+    background: rgba(255,255,255,0.1);
+    color: #fff;
+    font-size: 14px;
+    box-sizing: border-box;
+  }
+  .admin-login-box input::placeholder { color: rgba(255,255,255,0.4); }
+  .admin-login-box input:focus { outline: none; border-color: #ffd700; }
+  .admin-login-btn {
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(135deg, #ffd700, #ffaa00);
+    color: #1a1a3a;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 8px;
+  }
+  .admin-login-error {
+    color: #ff6b9d;
+    font-size: 13px;
+    margin-top: 10px;
+    min-height: 18px;
+  }
+
+  /* 管理员工具栏 */
+  .admin-toolbar {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%;
+    background: linear-gradient(135deg, #1a1a3a, #2d1b69);
+    border-bottom: 2px solid #ffd700;
+    padding: 8px 16px;
+    z-index: 9998;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    font-size: 13px;
+    color: #fff;
+  }
+  .admin-toolbar.active { display: flex; }
+  .admin-toolbar label { color: #ffd700; font-weight: bold; white-space: nowrap; }
+  .admin-toolbar select {
+    padding: 4px 8px;
+    border-radius: 4px;
+    border: 1px solid rgba(255,255,255,0.3);
+    background: rgba(255,255,255,0.1);
+    color: #fff;
+    font-size: 12px;
+  }
+  .admin-toolbar select option { background: #1a1a3a; color: #fff; }
+  .admin-toolbar button {
+    padding: 4px 12px;
+    border-radius: 4px;
+    border: 1px solid #ff6b9d;
+    background: rgba(255,107,157,0.2);
+    color: #ff6b9d;
+    cursor: pointer;
+    font-size: 12px;
+    margin-left: auto;
+  }
+  .admin-toolbar button:hover { background: #ff6b9d; color: #fff; }
+  .admin-status { color: #4ecdc4; font-size: 12px; }
+
 </style>
 </head>
 <body>
 <div class="stars" id="stars"></div>
+
+<!-- 管理员入口（右下角小图标） -->
+<div class="admin-entry" onclick="openAdminLogin()" title="管理员登录">⚙️</div>
+
+<!-- 管理员登录模态框 -->
+<div id="adminLoginModal" class="admin-login-modal" onclick="closeAdminLogin(event)">
+  <div class="admin-login-box" onclick="event.stopPropagation()">
+    <h3>🔐 管理员登录</h3>
+    <input type="text" id="adminUsername" placeholder="用户名" autocomplete="off">
+    <input type="password" id="adminPassword" placeholder="密码" autocomplete="off">
+    <button class="admin-login-btn" onclick="adminLogin()">登 录</button>
+    <div class="admin-login-error" id="adminLoginError"></div>
+  </div>
+</div>
+
+<!-- 管理员工具栏 -->
+<div id="adminToolbar" class="admin-toolbar">
+  <label>⚙️ 管理员模式</label>
+  <label>课程：</label>
+  <select id="adminCourseSelect" onchange="adminJumpCourse()"></select>
+  <label>页面：</label>
+  <select id="adminPageSelect" onchange="adminJumpPage()"></select>
+  <span class="admin-status" id="adminStatus"></span>
+  <button onclick="adminLogout()">退出管理员</button>
+</div>
+
 <div id="homeView">
 <div class="stars" id="stars"></div>
 
@@ -11830,8 +11970,11 @@ function renderMap(){
 }
 function openCourse(num){
   const c=courses.find(x=>x.num===num);if(!c)return;
-  const p=getProgress();const st=getLevelState(c,p);
-  if(st==='locked'){const lb=event.currentTarget.querySelector('.level-label');const o=lb.textContent;lb.textContent='🔒 先完成上一关！';setTimeout(()=>lb.textContent=o,1500);return;}
+  // 管理员模式跳过锁定检查
+  if (!isAdmin()) {
+    const p=getProgress();const st=getLevelState(c,p);
+    if(st==='locked'){const lb=event.currentTarget.querySelector('.level-label');const o=lb.textContent;lb.textContent='🔒 先完成上一关！';setTimeout(()=>lb.textContent=o,1500);return;}
+  }
   showCourse(num);
 }
 renderMap();
@@ -12526,9 +12669,105 @@ document.addEventListener('keydown', function(e) {
   }
 });
 
+// ========== 管理员功能 ==========
+const ADMIN_KEY = 'magicGrammarAdmin';
+const ADMIN_USER = 'admin';
+const ADMIN_PASS = 'slj821130';
+
+function isAdmin() { return localStorage.getItem(ADMIN_KEY) === 'true'; }
+
+function openAdminLogin() {
+  document.getElementById('adminLoginModal').classList.add('active');
+  document.getElementById('adminUsername').value = '';
+  document.getElementById('adminPassword').value = '';
+  document.getElementById('adminLoginError').textContent = '';
+  setTimeout(() => document.getElementById('adminUsername').focus(), 100);
+}
+
+function closeAdminLogin(event) {
+  if (event && event.target !== event.currentTarget) return;
+  document.getElementById('adminLoginModal').classList.remove('active');
+}
+
+function adminLogin() {
+  const u = document.getElementById('adminUsername').value.trim();
+  const p = document.getElementById('adminPassword').value;
+  const err = document.getElementById('adminLoginError');
+  if (u === ADMIN_USER && p === ADMIN_PASS) {
+    localStorage.setItem(ADMIN_KEY, 'true');
+    document.getElementById('adminLoginModal').classList.remove('active');
+    initAdminMode();
+  } else {
+    err.textContent = '❌ 用户名或密码错误';
+  }
+}
+
+function adminLogout() {
+  localStorage.removeItem(ADMIN_KEY);
+  document.getElementById('adminToolbar').classList.remove('active');
+  goHome();
+}
+
+function initAdminMode() {
+  if (!isAdmin()) return;
+  document.getElementById('adminToolbar').classList.add('active');
+  const cs = document.getElementById('adminCourseSelect');
+  cs.innerHTML = '';
+  courses.forEach(c => {
+    const o = document.createElement('option');
+    o.value = c.num;
+    o.textContent = '第' + c.num + '课：' + c.title;
+    cs.appendChild(o);
+  });
+  updateAdminPageSelect();
+  updateAdminStatus();
+}
+
+function updateAdminPageSelect() {
+  if (!isAdmin()) return;
+  const ps = document.getElementById('adminPageSelect');
+  ps.innerHTML = '';
+  for (let i = 0; i < slides.length; i++) {
+    const o = document.createElement('option');
+    o.value = i;
+    let label = 'P' + (i + 1);
+    if (i === 0) label += ' (封面)';
+    else if (i === slides.length - 1) label += ' (庆祝页)';
+    else if (i === slides.length - 2) label += ' (测试页)';
+    o.textContent = label;
+    ps.appendChild(o);
+  }
+  ps.value = currentSlide;
+}
+
+function updateAdminStatus() {
+  if (!isAdmin()) return;
+  document.getElementById('adminStatus').textContent = '当前：第' + currentCourse + '课 P' + (currentSlide + 1) + '/' + totalSlides;
+}
+
+function adminJumpCourse() {
+  if (!isAdmin()) return;
+  showCourse(parseInt(document.getElementById('adminCourseSelect').value));
+  updateAdminPageSelect();
+  updateAdminStatus();
+}
+
+function adminJumpPage() {
+  if (!isAdmin()) return;
+  goToSlide(parseInt(document.getElementById('adminPageSelect').value));
+  updateAdminStatus();
+}
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Enter' && document.getElementById('adminLoginModal').classList.contains('active')) {
+    adminLogin();
+  }
+});
+
 // 初始化
 ttsInit();
 updateWrongCount();
+if (isAdmin()) { initAdminMode(); }
 </script>
 
 <!-- 推荐海报模态框 -->
