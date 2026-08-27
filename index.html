@@ -12695,13 +12695,8 @@ document.addEventListener('keydown', function(e) {
 });
 
 // ========== 管理员功能 ==========
-// 用var而不是const，避免暂时性死区(TDZ)问题：openCourse在这些常量声明之前定义，
-// 但用户点击课程时isAdmin()会访问ADMIN_KEY，const的TDZ会导致"Cannot access before initialization"错误
-var ADMIN_KEY = 'magicGrammarAdmin';
-var ADMIN_USER = 'admin';
-var ADMIN_PASS = 'slj821130';
-
-function isAdmin() { return localStorage.getItem(ADMIN_KEY) === 'true'; }
+// 直接使用字符串字面量，避免变量作用域/提升问题导致undefined
+function isAdmin() { return localStorage.getItem('magicGrammarAdmin') === 'true'; }
 
 function openAdminLogin() {
   document.getElementById('adminLoginModal').classList.add('active');
@@ -12718,6 +12713,8 @@ function closeAdminLogin(event) {
 
 function adminLogin() {
   try {
+    const CORRECT_USER = 'admin';
+    const CORRECT_PASS = 'slj821130';
     const uInput = document.getElementById('adminUsername');
     const pInput = document.getElementById('adminPassword');
     const err = document.getElementById('adminLoginError');
@@ -12725,18 +12722,18 @@ function adminLogin() {
     const u = uInput.value.trim();
     const p = pInput.value;
     console.log('管理员登录尝试:', u, p.length + '位密码');
-    if (u === ADMIN_USER && p === ADMIN_PASS) {
-      localStorage.setItem(ADMIN_KEY, 'true');
+    if (u === CORRECT_USER && p === CORRECT_PASS) {
+      localStorage.setItem('magicGrammarAdmin', 'true');
       document.getElementById('adminLoginModal').classList.remove('active');
       initAdminMode();
       console.log('管理员登录成功');
     } else {
       // 分别提示用户名和密码是否正确，便于定位问题
       let msg = '❌ 登录失败：';
-      if (u !== ADMIN_USER) {
-        msg += '用户名不正确（输入了:"' + u + '"，应为:"' + ADMIN_USER + '"）';
-      } else if (p !== ADMIN_PASS) {
-        msg += '密码不正确（输入了' + p.length + '位，应为' + ADMIN_PASS.length + '位）';
+      if (u !== CORRECT_USER) {
+        msg += '用户名不正确（输入了:"' + u + '"，应为:"' + CORRECT_USER + '"）';
+      } else if (p !== CORRECT_PASS) {
+        msg += '密码不正确（输入了' + p.length + '位，应为' + CORRECT_PASS.length + '位）';
       }
       err.textContent = msg;
       console.log('登录失败:', msg);
@@ -12748,7 +12745,7 @@ function adminLogin() {
 }
 
 function adminLogout() {
-  localStorage.removeItem(ADMIN_KEY);
+  localStorage.removeItem('magicGrammarAdmin');
   document.getElementById('adminToolbar').classList.remove('active');
   goHome();
 }
