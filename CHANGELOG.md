@@ -14,10 +14,25 @@
 ### 功能优化
 - 🔧 新增 `.disclaimer-box` 和 `.site-footer` 样式，与现有魔法主题视觉风格统一
 - 🔧 README 更新：补充实际在线访问地址、二维码引用、仓库文档结构更新
+- 🔧 修复 GitHub Pages 无法播放语音：CDN Referer 防盗链导致第三方域名被拒，添加 `<meta name="referrer" content="no-referrer">` 和 `audioPlayer.referrerPolicy='no-referrer'` 双重修复
+
+### Bug 修复
+- 🐛 Issue #4：修复互动测试 4 个交互 Bug
+  - Bug1：切课时 `quizAnswered`/`quizCorrectCount` 不重置，导致第2课起测试失效 → `showCourse()` 中重置状态并恢复测试页UI
+  - Bug2：`id="celebrateBtn"` 在22课中重复，除第1课外全对后庆祝按钮永不显示 → 改为 `class="celebrate-btn"`，用 `closest('.slide').querySelector()` 定位当前页按钮
+  - Bug3：`feedbacks` 只定义第1课文案，其他课答题反馈串课显示第1课解析 → key 改为 `课号-题号-选项`，未定义时用通用文案
+  - Bug4：`openCourse()` 点开即记录通关，点第一关解锁全部22关 → 通关记录改到 `goToCelebrate()` 中写入（完成课程时通关）
+- 🐛 Issue #3：修复第3~22课随堂测试与庆祝页为第2课复制残留
+  - 自动解析 `courses/` 下20份随堂测试 md，提取前4道选择题及答案
+  - 自动解析20份课程大纲，提取教学目标（证书三行）和下节课预告
+  - 逐课替换 P15 互动测试（题干、选项、正确答案）和 P16 庆祝页（课次标题、证书核心知识点、下节课预告）
+  - 修复后：第3课考动词时态、第4课考不定词短语...第22课考倒装句
 
 ### Issue 关闭
 - ✅ Issue #1：首页新增作者联系方式、GitHub 仓库入口与版权信息
 - ✅ Issue #2：首页添加免责声明（参考《英语魔法师之语法俱乐部》，非营利用途）
+- ✅ Issue #3：第3~22课随堂测试与庆祝页内容为第2课复制残留
+- ✅ Issue #4：互动测试交互逻辑 4 个 bug
 
 ## [V1.1] - 2026-08-26
 
