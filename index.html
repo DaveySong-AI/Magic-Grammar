@@ -12731,8 +12731,15 @@ function adminLogin() {
       initAdminMode();
       console.log('管理员登录成功');
     } else {
-      err.textContent = '❌ 用户名或密码错误（输入了:' + u + '）';
-      console.log('登录失败: 用户名不匹配');
+      // 分别提示用户名和密码是否正确，便于定位问题
+      let msg = '❌ 登录失败：';
+      if (u !== ADMIN_USER) {
+        msg += '用户名不正确（输入了:"' + u + '"，应为:"' + ADMIN_USER + '"）';
+      } else if (p !== ADMIN_PASS) {
+        msg += '密码不正确（输入了' + p.length + '位，应为' + ADMIN_PASS.length + '位）';
+      }
+      err.textContent = msg;
+      console.log('登录失败:', msg);
     }
   } catch(e) {
     alert('登录出错: ' + e.message);
