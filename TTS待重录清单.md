@@ -148,7 +148,7 @@
 | 第14课 P10 | ⏳ 待重录 | data-note 恢复完整（"想说「篮子里…」"段），引号改中文 |
 | 第15课 P11 | ⏳ 待重录 | data-note 恢复完整（"但加工程序低科技…「营运畅旺」"段），引号改中文 |
 | 第16课 P9 | ⏳ 待重录 | data-note 恢复完整（"「空洞或与主句重复」的前提"段），引号改中文 |
-| 第22课 P8 | ⏳ 待重录 | data-note 恢复完整（引用句倒装整段，"I'm tired,"said John 等引号改中文） |
+| 第22课 P8 | ⏳ 待重录 | data-note 恢复完整（引用句倒装整段，"None was killed in the accident,」 said the police / Cholera, warns the WHO 等引号改中文） |
 
 > 已新增 `check_quotes.py` 防复发校验：扫描全部 data-note 值内是否残留英文双引号，推送前必须跑通（当前 351 个 data-note 全部通过）。
 

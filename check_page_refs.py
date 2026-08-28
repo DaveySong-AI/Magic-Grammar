@@ -27,7 +27,7 @@ if __name__ == '__main__':
         '想说「篮子里',             # 第14课
         '「但加工程序低科技」',      # 第15课
         '「空洞或与主句重复」',      # 第16课
-        '「I\'m tired,」 said John', # 第22课
+        'the police said（主语加动词的正常顺序）', # 第22课 P8（#32 改写后新锚点，原"I'm tired"例已删）
     ]
     for a in anchors:
         print(find_page(a))
