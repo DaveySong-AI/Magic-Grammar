@@ -99,12 +99,23 @@ def split_sections(lines, markers=('### 练习一', '### 练习二')):
     return sections
 
 def extract_prompt(qlines):
-    """提取分段中的总题干指令（第一个 **请...** 行），如「请选出最适当的答案填入空格内」"""
+    """提取分段中的总题干指令。
+    匹配粗体 **请...** / **将...**，也兼容非粗体的 请... / 将... 开头行（如第19章）。
+    跳过知识点行、题目来源说明、标题行、题目编号行、选项行。"""
+    SKIP_PREFIX = ('**本章知识点**', '**题目来源说明**', '### ', '---')
     for ln in qlines:
         t = ln.strip()
-        m = re.match(r'^\*\*(请.+?)\*\*$', t)
+        if not t:
+            continue
+        if t.startswith(SKIP_PREFIX):
+            continue
+        # 粗体指令：**请...** 或 **将...**
+        m = re.match(r'^\*\*(请.+?|将.+?)\*\*$', t)
         if m:
             return m.group(1).strip()
+        # 非粗体指令：以 请/将 开头，且不是题目行（数字开头）或选项行
+        if re.match(r'^(请|将)', t) and not re.match(r'^\d+[\.\．]', t) and not re.match(r'^[A-D][\)\．]', t):
+            return t
     return ''
 
 def extract_ch11_source_note(body):
