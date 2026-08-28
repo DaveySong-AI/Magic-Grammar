@@ -98,6 +98,49 @@ def split_sections(lines, markers=('### 练习一', '### 练习二')):
     sections.append((cur_label, cur_lines))
     return sections
 
+def extract_prompt(qlines):
+    """提取分段中的总题干指令（第一个 **请...** 行），如「请选出最适当的答案填入空格内」"""
+    for ln in qlines:
+        t = ln.strip()
+        m = re.match(r'^\*\*(请.+?)\*\*$', t)
+        if m:
+            return m.group(1).strip()
+    return ''
+
+def extract_ch11_source_note(body):
+    """提取第11章 题目来源说明（作为本章总题干）"""
+    for ln in body:
+        t = ln.strip()
+        m = re.match(r'^\*\*题目来源说明\*\*：(.+)$', t)
+        if m:
+            return m.group(1).strip()
+    return ''
+
+def split_ch11_sections(q_area):
+    """第11章按 ### 一、### 二、 等主题分段（而非 练习一/二）"""
+    sections = []
+    cur_label = ''
+    cur_lines = []
+    for ln in q_area:
+        t = ln.strip()
+        m = re.match(r'^###\s+(.+)$', t)
+        if m:
+            if cur_lines or cur_label:
+                sections.append((cur_label, cur_lines))
+            cur_label = m.group(1).strip()
+            cur_lines = []
+        else:
+            cur_lines.append(ln)
+    if cur_lines or cur_label:
+        sections.append((cur_label, cur_lines))
+    return sections
+
+def normalize_section_label(raw_label, has_multiple):
+    """把 split_sections 的原始标签转成展示名：''→'练习一'(多段时)，'### 练习二'→'练习二'"""
+    if not raw_label:
+        return '练习一' if has_multiple else ''
+    return re.sub(r'^###\s*', '', raw_label).strip()
+
 # ---------- 题目解析 ----------
 QNUM = re.compile(r'^\s*(\d{1,2})\.\s*(.*)$')
 EXNUM = re.compile(r'^\*\*Ex\.(\d{1,2})\*\*\s*(.*)$')
@@ -246,9 +289,23 @@ def main():
         else:
             q_area, a_area = body[:ans_idx], body[ans_idx + 1:]
 
-        q_sections = split_sections(q_area)
+        # 第11章按主题分段（### 一、二、…），其余按 练习一/二 分段
+        if num == 11:
+            q_sections = split_ch11_sections(q_area)
+        else:
+            q_sections = split_sections(q_area)
         a_sections = split_sections(a_area)
         a_dict = {label: ls for label, ls in a_sections}
+
+        # 本章总题干：第11章用「题目来源说明」；单分段章用该段指令；多分段章各段自带
+        chapter_prompt = ''
+        if num == 11:
+            chapter_prompt = extract_ch11_source_note(body)
+
+        # 统计有效分段数（含题目的），用于把首段 '' 归一化为「练习一」
+        _valid_secs = [s for s in q_sections
+                       if any(QNUM.match(l) or (num == 11 and EXNUM.match(l)) for l in s[1])]
+        has_multiple = len(_valid_secs) > 1
 
         if num == 16:
             BANK_CHAPTERS.append({'num': 16, 'title': header['title'],
@@ -259,8 +316,14 @@ def main():
         for label, qlines in q_sections:
             if not any(QNUM.match(l) or (num == 11 and EXNUM.match(l)) for l in qlines):
                 continue
+            sec_label = normalize_section_label(label, has_multiple)
+            sec_prompt = extract_prompt(qlines)
             qs = parse_questions(qlines, num)
-            alines = a_dict.get(label, [])
+            # 第11章答案为统一表格，不分段；其余按段匹配
+            if num == 11:
+                alines = a_area
+            else:
+                alines = a_dict.get(label, [])
             answers = parse_answers(alines, num) if alines else {}
 
             if num == 3 and label == '### 练习二':
@@ -270,7 +333,8 @@ def main():
                     qlist.append({
                         'id': 'B3-%d' % (len(qlist) + 1), 'ch': 3, 'type': 'free',
                         'q': clean_stem(' '.join(s['stem'])),
-                        'opts': None, 'ans': ans_val, 'exp': s['exp']
+                        'opts': None, 'ans': ans_val, 'exp': s['exp'],
+                        'section': sec_label, 'section_prompt': sec_prompt
                     })
                 continue
 
@@ -323,7 +387,8 @@ def main():
 
                 qlist.append({
                     'id': 'B%d-%d' % (num, len(qlist) + 1), 'ch': num,
-                    'type': qtype, 'q': stem, 'opts': opts, 'ans': ans_val, 'exp': exp
+                    'type': qtype, 'q': stem, 'opts': opts, 'ans': ans_val, 'exp': exp,
+                    'section': sec_label, 'section_prompt': sec_prompt
                 })
 
         # 解析字段兜底（Issue #57 需求3）：
@@ -338,7 +403,7 @@ def main():
             q['score'] = round(100.0 / count, 3) if count else 0
         BANK_QUESTIONS.extend(qlist)
         BANK_CHAPTERS.append({'num': num, 'title': header['title'],
-                              'knowledge': knowledge, 'count': count,
+                              'knowledge': knowledge, 'count': count, 'prompt': chapter_prompt,
                               'note': header['note'] if header['note'] and header['note'] != 'Test ' + str(num) else ''})
 
     data = {'chapters': BANK_CHAPTERS, 'questions': BANK_QUESTIONS}

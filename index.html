@@ -1319,6 +1319,14 @@
 .bank-judge-no { padding: 8px 18px; background: rgba(255,107,157,0.2); border: 2px solid #ff6b9d; color: #ff6b9d; border-radius: 20px; cursor: pointer; font-size: 14px; }
 .bank-test-footer { text-align: center; margin-top: 6px; }
 .bank-back-btn { padding: 10px 24px; background: rgba(255,255,255,0.1); border: 2px solid #ffd700; color: #ffd700; border-radius: 20px; cursor: pointer; font-size: 15px; }
+/* 知识点介绍 & 分段题干 */
+.bank-knowledge-box { background: rgba(255,215,0,0.08); border: 2px solid rgba(255,215,0,0.35); border-radius: 14px; padding: 14px 18px; margin-bottom: 14px; line-height: 1.7; }
+.bank-knowledge-box .bk-label { display: inline-block; font-weight: bold; color: #ffd700; font-size: clamp(14px, 1.8vw, 17px); margin-right: 10px; }
+.bank-knowledge-box .bk-text { color: rgba(255,255,255,0.88); font-size: clamp(13px, 1.6vw, 16px); }
+.bank-chapter-prompt { background: rgba(78,205,196,0.08); border-left: 4px solid #4ecdc4; border-radius: 8px; padding: 12px 16px; margin-bottom: 16px; color: rgba(255,255,255,0.9); font-size: clamp(13px, 1.6vw, 16px); line-height: 1.7; }
+.bank-section-head { display: flex; align-items: baseline; flex-wrap: wrap; gap: 10px; margin: 22px 0 12px; padding-bottom: 8px; border-bottom: 2px dashed rgba(255,255,255,0.18); }
+.bank-section-label { font-size: clamp(15px, 2vw, 19px); font-weight: bold; color: #9bbbf4; }
+.bank-section-prompt { font-size: clamp(13px, 1.6vw, 16px); color: rgba(255,255,255,0.78); }
 .bank-wrong-reveal { padding: 8px 18px; background: rgba(255,215,0,0.15); border: 2px solid #ffd700; color: #ffd700; border-radius: 20px; cursor: pointer; font-size: 14px; }
 @media (max-width: 480px) {
   .bank-grid { grid-template-columns: 1fr; }
@@ -12979,30 +12987,57 @@ function renderBankTest(ch) {
   }
   const st = getBankProgress()[ch] || {};
   let html = '';
+  // 本章知识点介绍
+  if (meta && meta.knowledge) {
+    html += '<div class="bank-knowledge-box"><span class="bk-label">📖 本章知识点</span><span class="bk-text">' + escapeHtml(meta.knowledge) + '</span></div>';
+  }
+  // 本章总题干（如第11章题目来源说明）
+  if (meta && meta.prompt) {
+    html += '<div class="bank-chapter-prompt">' + escapeHtml(meta.prompt) + '</div>';
+  }
+  // 按练习分段分组（保留原顺序），每段显示分段标签 + 总题干
+  const groups = [];
+  const groupIndex = {};
   qs.forEach(q => {
-    const score = bankScoreText(q.score);
-    if (q.type === 'choice') {
-      html += '<div class="bank-question-card" data-qid="' + q.id + '">';
-      html += '<div class="bank-q-head"><span class="bank-q-num">' + q.id.split('-')[1] + '</span><span class="bank-q-score">本题 ' + score + ' 分</span></div>';
-      html += '<div class="bank-q-text">' + escapeHtml(q.q) + '</div>';
-      html += '<div class="bank-q-options">';
-      const opts = q.opts || {};
-      ['A','B','C','D'].forEach(letter => {
-        if (!opts[letter]) return;
-        html += '<div class="bank-q-option" data-qid="' + q.id + '" data-letter="' + letter + '" onclick="bankCheckAnswer(this, \'' + q.id + '\', \'' + letter + '\')">' + letter + '. ' + escapeHtml(opts[letter]) + '</div>';
-      });
-      html += '</div>';
-      html += '<div class="bank-q-feedback"></div>';
-      html += '</div>';
-    } else {
-      html += '<div class="bank-question-card" data-qid="' + q.id + '">';
-      html += '<div class="bank-q-head"><span class="bank-q-num">' + q.id.split('-')[1] + '</span><span class="bank-q-score">本题 ' + score + ' 分</span></div>';
-      html += '<div class="bank-q-text">' + escapeHtml(q.q) + '</div>';
-      html += '<div class="bank-free-input-wrap"><input type="text" class="bank-free-input" data-qid="' + q.id + '" placeholder="在这里输入你的答案…" /></div>';
-      html += '<div class="bank-free-actions"><button class="bank-free-btn" onclick="bankRevealAnswer(\'' + q.id + '\')">📖 查看参考答案</button></div>';
-      html += '<div class="bank-q-feedback"></div>';
+    const key = (q.section || '') + '||' + (q.section_prompt || '');
+    if (!(key in groupIndex)) {
+      groupIndex[key] = groups.length;
+      groups.push({ label: q.section || '', prompt: q.section_prompt || '', items: [] });
+    }
+    groups[groupIndex[key]].items.push(q);
+  });
+  groups.forEach(g => {
+    if (g.label || g.prompt) {
+      html += '<div class="bank-section-head">';
+      if (g.label) html += '<span class="bank-section-label">' + escapeHtml(g.label) + '</span>';
+      if (g.prompt) html += '<span class="bank-section-prompt">' + escapeHtml(g.prompt) + '</span>';
       html += '</div>';
     }
+    g.items.forEach(q => {
+      const score = bankScoreText(q.score);
+      if (q.type === 'choice') {
+        html += '<div class="bank-question-card" data-qid="' + q.id + '">';
+        html += '<div class="bank-q-head"><span class="bank-q-num">' + q.id.split('-')[1] + '</span><span class="bank-q-score">本题 ' + score + ' 分</span></div>';
+        html += '<div class="bank-q-text">' + escapeHtml(q.q) + '</div>';
+        html += '<div class="bank-q-options">';
+        const opts = q.opts || {};
+        ['A','B','C','D'].forEach(letter => {
+          if (!opts[letter]) return;
+          html += '<div class="bank-q-option" data-qid="' + q.id + '" data-letter="' + letter + '" onclick="bankCheckAnswer(this, \'' + q.id + '\', \'' + letter + '\')">' + letter + '. ' + escapeHtml(opts[letter]) + '</div>';
+        });
+        html += '</div>';
+        html += '<div class="bank-q-feedback"></div>';
+        html += '</div>';
+      } else {
+        html += '<div class="bank-question-card" data-qid="' + q.id + '">';
+        html += '<div class="bank-q-head"><span class="bank-q-num">' + q.id.split('-')[1] + '</span><span class="bank-q-score">本题 ' + score + ' 分</span></div>';
+        html += '<div class="bank-q-text">' + escapeHtml(q.q) + '</div>';
+        html += '<div class="bank-free-input-wrap"><input type="text" class="bank-free-input" data-qid="' + q.id + '" placeholder="在这里输入你的答案…" /></div>';
+        html += '<div class="bank-free-actions"><button class="bank-free-btn" onclick="bankRevealAnswer(\'' + q.id + '\')">📖 查看参考答案</button></div>';
+        html += '<div class="bank-q-feedback"></div>';
+        html += '</div>';
+      }
+    });
   });
   html += '<div class="bank-test-footer"><button class="bank-back-btn" onclick="closeBankChapter()">← 返回题库总览</button></div>';
   container.innerHTML = html;
