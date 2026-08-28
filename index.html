@@ -12066,7 +12066,7 @@ function goHome() {
 let audioPlayer = null;
 let ttsIsPlaying = false;
 let ttsIsPaused = false;
-let ttsAutoPlay = false; // 默认关闭自动播放，与README一致，避免浏览器autoplay限制拦截
+let ttsAutoPlay = true; // 默认开启自动播放（对儿童友好，进入课程自动讲解翻页）；若被浏览器autoplay拦截会在状态栏提示点击
 let ttsRate = 1.0;
 
 // 初始化音频播放器
@@ -12099,6 +12099,19 @@ function ttsInit() {
     ttsUpdateUI();
     document.getElementById('ttsStatus').classList.remove('show');
   });
+  
+  // 同步自动播放开关UI与初始状态（默认开启显示active）
+  const autoToggle = document.getElementById('ttsAutoToggle');
+  const autoIcon = document.getElementById('ttsAutoIcon');
+  if (autoToggle) {
+    if (ttsAutoPlay) {
+      autoToggle.classList.add('active');
+      if (autoIcon) autoIcon.textContent = '✅';
+    } else {
+      autoToggle.classList.remove('active');
+      if (autoIcon) autoIcon.textContent = '🔄';
+    }
+  }
   
   console.log('高质量女老师语音播放器已初始化');
 }
