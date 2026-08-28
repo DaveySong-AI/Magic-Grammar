@@ -1,5 +1,26 @@
 # 更新日志
 
+## [V1.2.6] - 2026-08-28
+
+### 修复（Issue #32：解说词-卡片脱节）
+- 🐛 第22课P8：解说词删两组自造例（"I'm tired," said John / "What time is it?" asked the teacher），按课程脚本第五节重排为原书例句：直接引句 "None was killed in the accident," said the police（保留「也可不倒装、句尾 the police said 也对」要点）→ 间接引句 Cholera, warns the WHO, is coming back；"主语是代词不倒装 + they said"保留并加标注「（英文常见如此，原书未提，仅作提醒）」
+- 📇 第22课P8：卡片 ⚠️ 行同步加「原书未提，仅作提醒」标注；卡片顺序（None 组在前）与解说词对齐
+
+### 卡片吸收（9 页补卡，均加「补充举例（原书未提）」标签，解说词不动、音频不重录）
+- 第11课P12：补 Some of the books / Some of the water（some 视 of 后名词单复数）
+- 第11课P13：补 Measles is common / My family is large / My family are all tall / Statistics is a required course
+- 第19课P5：补 young/Beijing 例句链（When young ✅ / Being young ✅ / Young ❌ 省过头）
+- 第19课P7：补 as if crazy 例（并标注原书对应例 as if trying to hit her）
+- 第19课P8：补 doctor 第3例（Being a doctor / As a doctor）
+- 第19课P10：补 Having finished his homework 例
+- 第7课P8：补 a beautiful small old round yellow Chinese wooden table（美小圆旧黄）
+- 第7课P10：补 The news made her happy（标注「由原书 She makes everyone happy 变化」）
+- 第13课P10：补 Whoever comes, welcome（与原书 Whoever calls, I won't answer 并列）
+
+### 其他
+- 🛠 新增 `check_slide_sync.py` 提交前提示工具：解析解说词英文例句与同页卡片可见文本比对，报告潜在脱节供人工核对（辅助性，不阻断）
+- 📝 TTS待重录清单.md 追加 #32 记录（仅第22课P8需重录，9页补卡不涉及音频）
+
 ## [V1.2.5] - 2026-08-28
 
 ### Bug 修复（回归审校 #28/#29/#30）
