@@ -12852,6 +12852,20 @@ function escapeHtml(str) {
     .replace(/'/g, '&#39;');
 }
 
+// 转义HTML但保留 <u>…</u> 下划线标签（用于题库改写题题干和答案）
+function escapeHtmlKeepU(str) {
+  return String(str == null ? '' : str)
+    .replace(/<u>/g, '\x00U_OPEN\x00')
+    .replace(/<\/u>/g, '\x00U_CLOSE\x00')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;')
+    .replace(/\x00U_OPEN\x00/g, '<u>')
+    .replace(/\x00U_CLOSE\x00/g, '</u>');
+}
+
 function bankAllQuestions() { return window.BANK_DATA ? BANK_DATA.questions : []; }
 function bankChapterMeta(num) { return window.BANK_DATA ? BANK_DATA.chapters.find(c => c.num === num) : null; }
 function bankQuestionsOf(ch) { return bankAllQuestions().filter(q => q.ch === ch); }
@@ -13018,10 +13032,10 @@ function renderBankTest(ch) {
       if (q.type === 'choice') {
         html += '<div class="bank-question-card" data-qid="' + q.id + '">';
         html += '<div class="bank-q-head"><span class="bank-q-num">' + q.id.split('-')[1] + '</span><span class="bank-q-score">本题 ' + score + ' 分</span></div>';
-        html += '<div class="bank-q-text">' + escapeHtml(q.q) + '</div>';
+        html += '<div class="bank-q-text">' + escapeHtmlKeepU(q.q) + '</div>';
         html += '<div class="bank-q-options">';
         const opts = q.opts || {};
-        ['A','B','C','D'].forEach(letter => {
+        ['A','B','C','D','E'].forEach(letter => {
           if (!opts[letter]) return;
           html += '<div class="bank-q-option" data-qid="' + q.id + '" data-letter="' + letter + '" onclick="bankCheckAnswer(this, \'' + q.id + '\', \'' + letter + '\')">' + letter + '. ' + escapeHtml(opts[letter]) + '</div>';
         });
@@ -13031,7 +13045,7 @@ function renderBankTest(ch) {
       } else {
         html += '<div class="bank-question-card" data-qid="' + q.id + '">';
         html += '<div class="bank-q-head"><span class="bank-q-num">' + q.id.split('-')[1] + '</span><span class="bank-q-score">本题 ' + score + ' 分</span></div>';
-        html += '<div class="bank-q-text">' + escapeHtml(q.q) + '</div>';
+        html += '<div class="bank-q-text">' + escapeHtmlKeepU(q.q) + '</div>';
         html += '<div class="bank-free-input-wrap"><input type="text" class="bank-free-input" data-qid="' + q.id + '" placeholder="在这里输入你的答案…" /></div>';
         html += '<div class="bank-free-actions"><button class="bank-free-btn" onclick="bankRevealAnswer(\'' + q.id + '\')">📖 查看参考答案</button></div>';
         html += '<div class="bank-q-feedback"></div>';
@@ -13088,7 +13102,7 @@ function bankRevealAnswer(qid) {
   const card = document.querySelector('.bank-question-card[data-qid="' + qid + '"]');
   if (!card) return;
   const feedback = card.querySelector('.bank-q-feedback');
-  feedback.innerHTML = '<div class="bf-ans">📖 参考答案：' + escapeHtml(q.ans) + '</div>' + (q.exp ? '<div class="bf-exp">' + escapeHtml(q.exp) + '</div>' : '') + '<div class="bank-free-judge"><button class="bank-judge-ok" onclick="bankSelfJudge(\'' + qid + '\', true)">✅ 我答对了</button><button class="bank-judge-no" onclick="bankSelfJudge(\'' + qid + '\', false)">❌ 我答错了</button></div>';
+  feedback.innerHTML = '<div class="bf-ans">📖 参考答案：' + escapeHtmlKeepU(q.ans) + '</div>' + (q.exp ? '<div class="bf-exp">' + escapeHtml(q.exp) + '</div>' : '') + '<div class="bank-free-judge"><button class="bank-judge-ok" onclick="bankSelfJudge(\'' + qid + '\', true)">✅ 我答对了</button><button class="bank-judge-no" onclick="bankSelfJudge(\'' + qid + '\', false)">❌ 我答错了</button></div>';
   feedback.className = 'bank-q-feedback show';
 }
 function bankSelfJudge(qid, ok) {
