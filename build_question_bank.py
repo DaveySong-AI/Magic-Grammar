@@ -83,8 +83,12 @@ def parse_test_file(filepath, ch_num):
     cur_q = None
     in_answer = False
     in_explanation = False
+    in_table = False
+    in_translation = False
     answer_lines = []
     exp_lines = []
+    translations = []  # 收集译文段落
+    cur_translation = []
 
     def flush_question():
         nonlocal cur_q, answer_lines, exp_lines, in_answer, in_explanation
@@ -110,6 +114,13 @@ def parse_test_file(filepath, ch_num):
         ln = lines[i]
         stripped = ln.strip()
 
+        # 译文部分（必须在分段标题之前检测）
+        if stripped.startswith('## 译文'):
+            flush_question()
+            in_translation = True
+            i += 1
+            continue
+
         # 分段标题
         if stripped.startswith('## '):
             flush_question()
@@ -118,8 +129,8 @@ def parse_test_file(filepath, ch_num):
             i += 1
             continue
 
-        # 跳过引用、答案一览、译文等非题目内容
-        if stripped.startswith('> ') or stripped.startswith('## 答案') or stripped.startswith('## 译文') or stripped.startswith('## 五大'):
+        # 跳过引用、答案一览等非题目内容
+        if stripped.startswith('> ') or stripped.startswith('## 答案') or stripped.startswith('## 五大'):
             i += 1
             continue
 
@@ -139,13 +150,25 @@ def parse_test_file(filepath, ch_num):
                 'opts': {},
                 'type': 'free',  # 暂定，有选项则改 choice
                 'ans_raw': '',
+                'wordTypes': [],  # 第6章：词↔类型映射
                 'section': cur_section,
                 'section_prompt': cur_prompt,
             }
             in_answer = False
             in_explanation = False
+            in_table = False
             answer_lines = []
             exp_lines = []
+            i += 1
+            continue
+
+        # 译文段落收集（必须在 cur_q is None 之前处理）
+        if in_translation:
+            if stripped:
+                cur_translation.append(stripped)
+            elif cur_translation:
+                translations.append(' '.join(cur_translation))
+                cur_translation = []
             i += 1
             continue
 
@@ -200,6 +223,46 @@ def parse_test_file(filepath, ch_num):
                 i += 1
                 continue
 
+        # 译文部分：## 译文：
+        if stripped.startswith('## 译文'):
+            in_translation = True
+            in_answer = False
+            in_explanation = False
+            in_table = False
+            i += 1
+            continue
+
+        # 表格表头：| 序号 | 画底线词 | 类型 |
+        if re.match(r'^\|\s*序号\s*\|\s*画底线词\s*\|\s*类型\s*\|', stripped):
+            in_table = True
+            in_answer = False
+            in_explanation = False
+            i += 1
+            continue
+
+        # 表格分隔行：|---|---|---|
+        if in_table and re.match(r'^\|[\s\-|]+\|$', stripped):
+            i += 1
+            continue
+
+        # 表格数据行：| 1 | living | pp |
+        if in_table and stripped.startswith('|'):
+            cells = [c.strip() for c in stripped.strip('|').split('|')]
+            if len(cells) >= 3 and cur_q:
+                try:
+                    seq = int(cells[0])
+                    word = cells[1]
+                    wtype = cells[2]
+                    cur_q['wordTypes'].append({'num': seq, 'word': word, 'type': wtype})
+                except ValueError:
+                    pass
+            i += 1
+            continue
+
+        # 表格结束（遇到非表格行且有题目在处理）
+        if in_table and not stripped.startswith('|') and stripped:
+            in_table = False
+
         # 续行
         if in_explanation:
             if stripped:
@@ -215,6 +278,9 @@ def parse_test_file(filepath, ch_num):
         i += 1
 
     flush_question()
+    # 处理最后一段译文
+    if cur_translation:
+        translations.append(' '.join(cur_translation))
 
     # 后处理：为每题分配 id、score，清理数据
     result = []
@@ -238,6 +304,12 @@ def parse_test_file(filepath, ch_num):
         qtext = re.sub(r'^题目[：:]\s*\d+\.\s*', '', q['q']).strip()
         # 清理解析中的 ** 前缀
         exp = re.sub(r'^\*{1,2}\s*', '', q.get('exp', ''), flags=re.M)
+        # 第6章：词类型映射和译文
+        word_types = q.get('wordTypes', [])
+        translation = translations[idx] if idx < len(translations) else ''
+        # 如果有词类型映射，把格式化的映射存入 ans（兼容通用渲染）
+        if word_types and not ans:
+            ans = '；'.join(f"{wt['word']}→{wt['type']}" for wt in word_types)
         result.append({
             'id': qid,
             'ch': ch_num,
@@ -249,6 +321,8 @@ def parse_test_file(filepath, ch_num):
             'score': 0,  # 后面统一算
             'section': q.get('section', ''),
             'section_prompt': q.get('section_prompt', ''),
+            'wordTypes': word_types if word_types else None,
+            'translation': translation if translation else None,
         })
 
     return title, result
