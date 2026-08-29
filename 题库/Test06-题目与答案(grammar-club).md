@@ -3,6 +3,8 @@
 > 提取自 https://llwslc.github.io/grammar-club/content/Chapter06.html#test
 > 题目、答案与解析取自该页面渲染组件所带数据；下划线/画底线以 `<u>…</u>` 标注，选择题空格以 `__` 标注。
 
+> **题干说明**：下面有篇文章，是改写自一篇阅读测验题目，把每个句子中都放进去一个以上的现在分词（pp）或过去分词（Ven），偶尔也有几个动名词（Gr）或不定词（Inf），请读者看看这些动状词的用法，与所学过的观念印证一下。
+
 ## 练习
 
 **1.** A decade ago, nearly a million and a half elephants were <u>living</u> in Africa. During the past ten years, the number of elephants has dwindled to about one half. These elephants are still <u>being</u> <u>killed</u> for their tusks, which are worth a lot of money, in spite of an <u>increasing</u> outcry against elephant <u>hunting</u>. Most elephants <u>killed</u> today die in the hand of illegal hunters.
