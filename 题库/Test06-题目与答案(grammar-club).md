@@ -3,76 +3,76 @@
 > 提取自 https://llwslc.github.io/grammar-club/content/Chapter06.html#test
 > 题目、答案与解析取自该页面渲染组件所带数据；下划线/画底线以 `<u>…</u>` 标注，选择题空格以 `__` 标注。
 
-> **题干说明**：下面有篇文章，是改写自一篇阅读测验题目，把每个句子中都放进去一个以上的现在分词（pp）或过去分词（Ven），偶尔也有几个动名词（Gr）或不定词（Inf），请读者看看这些动状词的用法，与所学过的观念印证一下。
-
 ## 练习
+
+**类型说明**：句中画底线词的动状词类型分为四种——现在分词（pp）、过去分词（Ven）、动名词（Gr）、不定词（Inf）。
 
 **1.** A decade ago, nearly a million and a half elephants were <u>living</u> in Africa. During the past ten years, the number of elephants has dwindled to about one half. These elephants are still <u>being</u> <u>killed</u> for their tusks, which are worth a lot of money, in spite of an <u>increasing</u> outcry against elephant <u>hunting</u>. Most elephants <u>killed</u> today die in the hand of illegal hunters.
 
 | 序号 | 画底线词 | 类型 |
 |---|---|---|
-| 1 | living | pp |
-| 2 | being | pp |
-| 3 | killed | Ven |
-| 4 | increasing | pp |
-| 5 | hunting | Gr |
-| 6 | killed | Ven |
+| 1 | living | 现在分词（pp） |
+| 2 | being | 现在分词（pp） |
+| 3 | killed | 过去分词（Ven） |
+| 4 | increasing | 现在分词（pp） |
+| 5 | hunting | 动名词（Gr） |
+| 6 | killed | 过去分词（Ven） |
 
 **2.** A <u>grass-consuming</u> animal, the elephant eats as much as 300 pounds a day when fully <u>grown</u>. <u>Wandering</u> far and wide in their search for food, elephants can move dozens of miles a day. <u>Failing</u> <u>to find the</u> grasses they like best, they may turn to the trees and eat them.
 
 | 序号 | 画底线词 | 类型 |
 |---|---|---|
-| 1 | grass-consuming | pp |
-| 2 | grown | Ven |
-| 3 | Wandering | pp |
-| 4 | Failing | pp |
-| 5 | to find the | Inf |
+| 1 | grass-consuming | 现在分词（pp） |
+| 2 | grown | 过去分词（Ven） |
+| 3 | Wandering | 现在分词（pp） |
+| 4 | Failing | 现在分词（pp） |
+| 5 | to find the | 不定词（Inf） |
 
 **3.** Today, the <u>remaining</u> grasslands for the elephant are seriously <u>reduced</u>. Many places along their migration routes have <u>been</u> <u>turned</u> into farms. Some elephants are <u>killed</u> by farmers while <u>feeding</u> on the farms.
 
 | 序号 | 画底线词 | 类型 |
 |---|---|---|
-| 1 | remaining | pp |
-| 2 | reduced | Ven |
-| 3 | been | Ven |
-| 4 | turned | Ven |
-| 5 | killed | Ven |
-| 6 | feeding | pp |
+| 1 | remaining | 现在分词（pp） |
+| 2 | reduced | 过去分词（Ven） |
+| 3 | been | 过去分词（Ven） |
+| 4 | turned | 过去分词（Ven） |
+| 5 | killed | 过去分词（Ven） |
+| 6 | feeding | 现在分词（pp） |
 
 **4.** What can the people do here in Taiwan about a <u>threatened</u> animal <u>living</u> so far away? First, we should know that there is a law <u>protecting</u> elephants, even here. People cannot buy or smuggle items <u>made</u> from ivory or any part of the elephant's body. Some <u>handicapped</u> persons <u>living</u> on <u>making</u> name chops have <u>been</u> <u>protesting</u> that the law impairs their livelihood, <u>making</u> it impossible for them <u>to earn</u> money. There are, of course, many substitute materials for elephant tusks, water buffalo horns <u>being</u> an important one.
 
 | 序号 | 画底线词 | 类型 |
 |---|---|---|
-| 1 | threatened | Ven |
-| 2 | living | pp |
-| 3 | protecting | pp |
-| 4 | made | Ven |
-| 5 | handicapped | Ven |
-| 6 | living | pp |
-| 7 | making | Gr |
-| 8 | been | Ven |
-| 9 | protesting | pp |
-| 10 | making | pp |
-| 11 | to earn | Inf |
-| 12 | being | pp |
+| 1 | threatened | 过去分词（Ven） |
+| 2 | living | 现在分词（pp） |
+| 3 | protecting | 现在分词（pp） |
+| 4 | made | 过去分词（Ven） |
+| 5 | handicapped | 过去分词（Ven） |
+| 6 | living | 现在分词（pp） |
+| 7 | making | 动名词（Gr） |
+| 8 | been | 过去分词（Ven） |
+| 9 | protesting | 现在分词（pp） |
+| 10 | making | 现在分词（pp） |
+| 11 | to earn | 不定词（Inf） |
+| 12 | being | 现在分词（pp） |
 
 **5.** Most countries are now no longer <u>importing</u> ivory. It is <u>hoped</u> that the ban on <u>buying</u> or <u>selling</u> ivory will save the <u>remaining</u> African elephants. Wildlife conservation organizations like the WWF are not <u>facing</u> the problem <u>lying down</u>. <u>Claiming</u> that the <u>ivory-producing</u> countries are unable <u>to protect</u> the elephants there, they are <u>proposing</u> some <u>market-oriented</u> approaches to <u>solving</u> the problem.
 
 | 序号 | 画底线词 | 类型 |
 |---|---|---|
-| 1 | importing | pp |
-| 2 | hoped | Ven |
-| 3 | buying | Gr |
-| 4 | selling | Gr |
-| 5 | remaining | pp |
-| 6 | facing | pp |
-| 7 | lying down | pp |
-| 8 | Claiming | pp |
-| 9 | ivory-producing | pp |
-| 10 | to protect | Inf |
-| 11 | proposing | pp |
-| 12 | market-oriented | Ven |
-| 13 | solving | Gr |
+| 1 | importing | 现在分词（pp） |
+| 2 | hoped | 过去分词（Ven） |
+| 3 | buying | 动名词（Gr） |
+| 4 | selling | 动名词（Gr） |
+| 5 | remaining | 现在分词（pp） |
+| 6 | facing | 现在分词（pp） |
+| 7 | lying down | 现在分词（pp） |
+| 8 | Claiming | 现在分词（pp） |
+| 9 | ivory-producing | 现在分词（pp） |
+| 10 | to protect | 不定词（Inf） |
+| 11 | proposing | 现在分词（pp） |
+| 12 | market-oriented | 过去分词（Ven） |
+| 13 | solving | 动名词（Gr） |
 
 ## 译文：
 
