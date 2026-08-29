@@ -85,6 +85,7 @@ def parse_test_file(filepath, ch_num):
     in_explanation = False
     in_table = False
     in_translation = False
+    test_intro = ""  # 题干说明（第6章）
     answer_lines = []
     exp_lines = []
     translations = []  # 收集译文段落
@@ -113,6 +114,15 @@ def parse_test_file(filepath, ch_num):
     while i < len(lines):
         ln = lines[i]
         stripped = ln.strip()
+
+        # 题干说明（引用块中的 **题干说明**：...）
+        if '题干说明' in stripped and stripped.startswith('>'):
+            # 提取说明文字，去掉 "> **题干说明**：" 前缀
+            intro_text = re.sub(r'^>\s*\*{0,2}题干说明\*{0,2}[：:]\s*', '', stripped).strip()
+            if intro_text:
+                test_intro = intro_text
+            i += 1
+            continue
 
         # 译文部分（必须在分段标题之前检测）
         if stripped.startswith('## 译文'):
@@ -325,7 +335,7 @@ def parse_test_file(filepath, ch_num):
             'translation': translation if translation else None,
         })
 
-    return title, result
+    return title, result, test_intro
 
 
 def parse_section_header(text):
@@ -371,7 +381,7 @@ def main():
     all_questions = []
 
     for ch_num, filepath in test_files:
-        title, questions = parse_test_file(filepath, ch_num)
+        title, questions, test_intro = parse_test_file(filepath, ch_num)
         count = len(questions)
         # 分值：每章100分，按题数均分
         score = round(100 / count, 1) if count > 0 else 0
@@ -393,6 +403,7 @@ def main():
             'count': count,
             'prompt': chapter_prompt,
             'note': note,
+            'test_intro': test_intro,
         })
 
     # 按章号排序
