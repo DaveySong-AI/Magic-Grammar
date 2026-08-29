@@ -86,6 +86,7 @@ def parse_test_file(filepath, ch_num):
     in_table = False
     in_translation = False
     test_intro = ""  # 题干说明（第6章）
+    type_note = ""  # 类型说明（第6章）
     answer_lines = []
     exp_lines = []
     translations = []  # 收集译文段落
@@ -121,6 +122,14 @@ def parse_test_file(filepath, ch_num):
             intro_text = re.sub(r'^>\s*\*{0,2}题干说明\*{0,2}[：:]\s*', '', stripped).strip()
             if intro_text:
                 test_intro = intro_text
+            i += 1
+            continue
+
+        # 类型说明（**类型说明**：...，第6章）
+        if stripped.startswith('**类型说明**'):
+            note_text = re.sub(r'^\*{0,2}类型说明\*{0,2}[：:]\s*', '', stripped).strip()
+            if note_text:
+                type_note = note_text
             i += 1
             continue
 
@@ -255,15 +264,18 @@ def parse_test_file(filepath, ch_num):
             i += 1
             continue
 
-        # 表格数据行：| 1 | living | pp |
+        # 表格数据行：| 1 | living | 现在分词（pp） |
         if in_table and stripped.startswith('|'):
             cells = [c.strip() for c in stripped.strip('|').split('|')]
             if len(cells) >= 3 and cur_q:
                 try:
                     seq = int(cells[0])
                     word = cells[1]
-                    wtype = cells[2]
-                    cur_q['wordTypes'].append({'num': seq, 'word': word, 'type': wtype})
+                    wtype_full = cells[2]
+                    # 从完整写法中提取缩写（如"现在分词（pp）"→"pp"）
+                    m_type = re.search(r'[（(](pp|Ven|Gr|Inf)[）)]', wtype_full)
+                    wtype_short = m_type.group(1) if m_type else wtype_full
+                    cur_q['wordTypes'].append({'num': seq, 'word': word, 'type': wtype_short, 'typeFull': wtype_full})
                 except ValueError:
                     pass
             i += 1
@@ -335,7 +347,7 @@ def parse_test_file(filepath, ch_num):
             'translation': translation if translation else None,
         })
 
-    return title, result, test_intro
+    return title, result, test_intro, type_note
 
 
 def parse_section_header(text):
@@ -381,7 +393,7 @@ def main():
     all_questions = []
 
     for ch_num, filepath in test_files:
-        title, questions, test_intro = parse_test_file(filepath, ch_num)
+        title, questions, test_intro, type_note = parse_test_file(filepath, ch_num)
         count = len(questions)
         # 分值：每章100分，按题数均分
         score = round(100 / count, 1) if count > 0 else 0
@@ -404,6 +416,7 @@ def main():
             'prompt': chapter_prompt,
             'note': note,
             'test_intro': test_intro,
+            'type_note': type_note,
         })
 
     # 按章号排序

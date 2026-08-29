@@ -1324,6 +1324,8 @@
 .bank-test-intro { background: rgba(155,187,244,0.08); border: 2px solid rgba(155,187,244,0.35); border-radius: 14px; padding: 14px 18px; margin-bottom: 14px; line-height: 1.8; }
 .bank-test-intro .bti-label { display: inline-block; font-weight: bold; color: #9bbbf4; font-size: clamp(14px, 1.8vw, 17px); margin-right: 10px; }
 .bank-test-intro .bti-text { color: rgba(255,255,255,0.88); font-size: clamp(13px, 1.6vw, 16px); }
+/* 类型说明（第6章，练习标题下） */
+.bank-type-note { background: rgba(255,215,0,0.06); border-left: 3px solid #ffd700; border-radius: 6px; padding: 10px 16px; margin: 0 0 14px 0; color: rgba(255,255,255,0.82); font-size: clamp(13px, 1.5vw, 15px); line-height: 1.8; }
 .bank-free-input-wrap { margin-bottom: 10px; }
 .bank-free-input { width: 100%; padding: 10px 14px; background: rgba(255,255,255,0.06); border: 2px solid rgba(255,255,255,0.25); border-radius: 10px; color: #fff; font-size: 15px; font-family: inherit; box-sizing: border-box; }
 .bank-free-input:focus { outline: none; border-color: #4ecdc4; }
@@ -13042,12 +13044,18 @@ function renderBankTest(ch) {
     }
     groups[groupIndex[key]].items.push(q);
   });
-  groups.forEach(g => {
+  groups.forEach((g, gi) => {
     if (g.label || g.prompt) {
       html += '<div class="bank-section-head">';
       if (g.label) html += '<span class="bank-section-label">' + escapeHtml(g.label) + '</span>';
       if (g.prompt) html += '<span class="bank-section-prompt">' + escapeHtml(g.prompt) + '</span>';
       html += '</div>';
+    }
+    // 类型说明（第6章，只在第一个分段显示一次）
+    if (gi === 0 && meta && meta.type_note) {
+      let noteHtml = escapeHtml(meta.type_note);
+      noteHtml = noteHtml.replace(/（(pp|Ven|Gr|Inf)）/g, '（<span class="wt-type wt-$1">$1</span>）');
+      html += '<div class="bank-type-note">' + noteHtml + '</div>';
     }
     g.items.forEach(q => {
       const score = bankScoreText(q.score);
@@ -13130,7 +13138,8 @@ function bankRevealAnswer(qid) {
     html += '<div class="bf-ans">📖 参考答案（词↔类型）：</div>';
     html += '<table class="bf-wordtype-table"><thead><tr><th>序号</th><th>画底线词</th><th>类型</th></tr></thead><tbody>';
     q.wordTypes.forEach(function(wt) {
-      html += '<tr><td>' + wt.num + '</td><td><u>' + escapeHtml(wt.word) + '</u></td><td><span class="wt-type wt-' + escapeHtml(wt.type) + '">' + escapeHtml(wt.type) + '</span></td></tr>';
+      const typeDisplay = wt.typeFull || wt.type;
+      html += '<tr><td>' + wt.num + '</td><td><u>' + escapeHtml(wt.word) + '</u></td><td><span class="wt-type wt-' + escapeHtml(wt.type) + '">' + escapeHtml(typeDisplay) + '</span></td></tr>';
     });
     html += '</tbody></table>';
     if (q.translation) {
