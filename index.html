@@ -1597,6 +1597,28 @@
   }
   .admin-entry:hover { color: rgba(255,215,0,1); background: rgba(0,0,0,0.6); transform: scale(1.1); }
 
+  /* 推荐海报分享入口（右上角固定图标） */
+  .poster-entry {
+    position: fixed;
+    top: 16px;
+    right: 16px;
+    font-size: 22px;
+    color: rgba(78,205,196,0.7);
+    cursor: pointer;
+    z-index: 100;
+    user-select: none;
+    transition: all 0.3s;
+    background: rgba(0,0,0,0.3);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(78,205,196,0.3);
+  }
+  .poster-entry:hover { color: rgba(78,205,196,1); background: rgba(0,0,0,0.6); transform: scale(1.1); box-shadow: 0 0 15px rgba(78,205,196,0.5); }
+
   /* 管理员登录模态框 */
   .admin-login-modal {
     display: none;
@@ -1705,6 +1727,9 @@
 <body>
 <div class="stars" id="stars"></div>
 
+<!-- 推荐海报分享入口（右上角固定图标） -->
+<div class="poster-entry" onclick="openPosterModal()" title="分享推荐海报">📤</div>
+
 <!-- 管理员入口（右下角小图标） -->
 <div class="admin-entry" onclick="openAdminLogin()" title="管理员登录">⚙️</div>
 
@@ -1745,7 +1770,6 @@
     <a class="ref-source-btn" href="https://llwslc.github.io/grammar-club/" target="_blank" rel="noopener noreferrer" title="魔法英语语法原文（第三方站点），版权归原作者所有，本项目仅作学习参考">📖 原文参考</a>
     <button class="bank-btn" onclick="openBank()">📚 题库</button>
     <button class="wrongbook-btn" onclick="openWrongBook()">📕 错题本 <span id="wrongCount">0</span></button>
-    <button class="poster-btn" onclick="openPosterModal()">📢 推荐海报</button>
   </div>
   <div class="stats-row stats-row--progress">
     <div class="stat-badge">⭐ 通关 <span id="completedCount">0</span> / 22</div>
