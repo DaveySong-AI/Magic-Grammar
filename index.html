@@ -1640,6 +1640,10 @@
     cursor: pointer;
     margin-top: 8px;
   }
+  .admin-login-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
   .admin-login-error {
     color: #ff6b9d;
     font-size: 13px;
@@ -13315,7 +13319,17 @@ document.addEventListener('keydown', function(e) {
 });
 
 // ========== 管理员功能 ==========
-// 直接使用字符串字面量，避免变量作用域/提升问题导致undefined
+// 登录凭证：用户名明文（非敏感），密码仅存 SHA-256(密码+salt) 哈希值
+const ADMIN_USER = 'admin';
+const ADMIN_SALT = 'mg2026!salt#x9k7';
+const ADMIN_PASS_HASH = '0a5f1c5b47d29df8de11bf67eebc2b16798fd826d3492b8f39f95a3c1ba9c00d';
+
+// SHA-256 哈希辅助函数（Web Crypto，异步）
+async function sha256Hex(str) {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
 function isAdmin() { return localStorage.getItem('magicGrammarAdmin') === 'true'; }
 
 function openAdminLogin() {
@@ -13331,36 +13345,42 @@ function closeAdminLogin(event) {
   document.getElementById('adminLoginModal').classList.remove('active');
 }
 
-function adminLogin() {
+async function adminLogin() {
   try {
-    const CORRECT_USER = 'admin';
-    const CORRECT_PASS = 'slj821130';
     const uInput = document.getElementById('adminUsername');
     const pInput = document.getElementById('adminPassword');
     const err = document.getElementById('adminLoginError');
+    const btn = document.querySelector('.admin-login-btn');
     if (!uInput || !pInput || !err) { alert('登录表单元素缺失'); return; }
     const u = uInput.value.trim();
     const p = pInput.value;
-    console.log('管理员登录尝试:', u, p.length + '位密码');
-    if (u === CORRECT_USER && p === CORRECT_PASS) {
+
+    // 禁用按钮防重复提交
+    if (btn) { btn.disabled = true; btn.textContent = '登录中…'; }
+
+    // 用户名校验（明文，非敏感信息）
+    if (u !== ADMIN_USER) {
+      err.textContent = '❌ 用户名或密码错误';
+      if (btn) { btn.disabled = false; btn.textContent = '登 录'; }
+      return;
+    }
+
+    // 密码 SHA-256 哈希比对（源码仅存哈希值+salt，无明文密码）
+    const inputHash = await sha256Hex(p + ADMIN_SALT);
+    if (inputHash === ADMIN_PASS_HASH) {
       localStorage.setItem('magicGrammarAdmin', 'true');
       document.getElementById('adminLoginModal').classList.remove('active');
       initAdminMode();
-      console.log('管理员登录成功');
     } else {
-      // 分别提示用户名和密码是否正确，便于定位问题
-      let msg = '❌ 登录失败：';
-      if (u !== CORRECT_USER) {
-        msg += '用户名不正确（输入了:"' + u + '"，应为:"' + CORRECT_USER + '"）';
-      } else if (p !== CORRECT_PASS) {
-        msg += '密码不正确（输入了' + p.length + '位，应为' + CORRECT_PASS.length + '位）';
-      }
-      err.textContent = msg;
-      console.log('登录失败:', msg);
+      err.textContent = '❌ 用户名或密码错误';
     }
+
+    if (btn) { btn.disabled = false; btn.textContent = '登 录'; }
   } catch(e) {
     alert('登录出错: ' + e.message);
     console.error('adminLogin错误:', e);
+    const btn = document.querySelector('.admin-login-btn');
+    if (btn) { btn.disabled = false; btn.textContent = '登 录'; }
   }
 }
 
