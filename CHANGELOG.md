@@ -1,5 +1,13 @@
 # 更新日志
 
+## [V1.5.1] - 2026-08-29
+
+### 修复：讲解词切换打断 TTS 语音（Issue #61）
+- 🐛 根因：`toggleNotes()` 调用完整的 `updateSlide()`，而 `updateSlide()` 末尾包含 TTS 自动播放逻辑，导致每次切换讲解词显示/隐藏都会触发 `ttsPlay()` 停止并重新播放当前页语音
+- 🔧 修复：将讲解词可见性逻辑抽为独立函数 `updateNoteVisibility()`，`toggleNotes()` 仅切换文字可见性，不再调用 `updateSlide()`，语音播放状态完全不受影响
+- ✅ 翻页（next/prev/goToSlide）行为不变，仍正常停止旧语音并播放新页；自动播放逻辑不变
+- ✅ 校验：check_quotes / check_page_refs / check_slide_sync 通过，node 语法检查通过
+
 ## [V1.5.0] - 2026-08-28
 
 ### 语法题库（Issue #57）

@@ -12455,14 +12455,8 @@ function updateSlide() {
     dot.classList.toggle('active', index === currentSlide);
   });
   
-  // 更新讲解词
-  const note = slides[currentSlide].dataset.note;
-  if (notesVisible && note) {
-    teacherNote.textContent = note;
-    teacherNote.classList.add('show');
-  } else {
-    teacherNote.classList.remove('show');
-  }
+  // 更新讲解词（仅控制可见性，不影响TTS播放）
+  updateNoteVisibility();
   
   // 更新导航按钮状态
   document.getElementById('prevBtn').disabled = currentSlide === 0;
@@ -12521,11 +12515,23 @@ function goToSlide(index) {
   updateSlide();
 }
 
+// 更新讲解词可见性（仅控制DOM显示，不触发TTS播放/停止，解决issue #61）
+function updateNoteVisibility() {
+  if (!slides || slides.length === 0) return;
+  const note = slides[currentSlide].dataset.note;
+  if (notesVisible && note) {
+    teacherNote.textContent = note;
+    teacherNote.classList.add('show');
+  } else {
+    teacherNote.classList.remove('show');
+  }
+}
+
 function toggleNotes() {
   notesVisible = !notesVisible;
   noteToggle.classList.toggle('active', notesVisible);
   noteToggle.textContent = notesVisible ? '📖 隐藏讲解词' : '📖 讲解词';
-  updateSlide();
+  updateNoteVisibility(); // 仅切换讲解词显示，不调用updateSlide()，避免打断TTS语音
 }
 
 // 键盘导航
